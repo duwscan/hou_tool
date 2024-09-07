@@ -1,18 +1,11 @@
-import {Link, useForm} from '@inertiajs/react'
-import {Grid, Box, Card, Stack, Typography} from '@mui/material';
-
-// components
+import { Grid, Box, Card, Typography, Stack } from '@mui/material';
 import PageContainer from '@/Components/container/PageContainer';
-import AuthLogin from './AuthLogin';
+import AuthRegister from './AuthRegister';
+import {Link} from "@inertiajs/react";
 
-interface LoginPageProps {
-    status?: string;
-    canResetPassword: boolean;
-}
-
-export default function Login({status, canResetPassword}: LoginPageProps) {
-    return (
-        <PageContainer title="Login Page" description="this is Sample page">
+export default function Register2() {
+    return(
+        <PageContainer title="Register Page" description="this is Sample page">
             <Box
                 sx={{
                     position: 'relative',
@@ -28,7 +21,7 @@ export default function Login({status, canResetPassword}: LoginPageProps) {
                     },
                 }}
             >
-                <Grid container spacing={0} justifyContent="center" sx={{height: '100vh'}}>
+                <Grid container spacing={0} justifyContent="center" sx={{ height: '100vh' }}>
                     <Grid
                         item
                         xs={12}
@@ -39,28 +32,31 @@ export default function Login({status, canResetPassword}: LoginPageProps) {
                         justifyContent="center"
                         alignItems="center"
                     >
-                        <Card elevation={9} sx={{p: 4, zIndex: 1, width: '100%', maxWidth: '450px'}}>
+                        <Card elevation={9} sx={{ p: 4, zIndex: 1, width: '100%', maxWidth: '450px' }}>
                             <Box display="flex" alignItems="center" justifyContent="center">
-                                {/*<Logo />*/}
-                                LOGO HERE
+                                {"Logo here"}
                             </Box>
-                            <AuthLogin
-                                canResetPassword={canResetPassword}
+                            <AuthRegister
+                                subtext={
+                                    <Typography variant="subtitle1" textAlign="center" color="textSecondary" mb={1}>
+                                        Your Social Campaigns
+                                    </Typography>
+                                }
                                 subtitle={
-                                    <Stack direction="row" spacing={1} justifyContent="center" mt={3}>
-                                        <Typography color="textSecondary" variant="h6" fontWeight="500">
-                                            New to Modernize?
+                                    <Stack direction="row" spacing={1} mt={3}>
+                                        <Typography color="textSecondary" variant="h6" fontWeight="400">
+                                            Already have an Account?
                                         </Typography>
                                         <Typography
                                             component={Link}
-                                            href={route('register')}
+                                            href={route('login')}
                                             fontWeight="500"
                                             sx={{
                                                 textDecoration: 'none',
                                                 color: 'primary.main',
                                             }}
                                         >
-                                            Create an account
+                                            Sign In
                                         </Typography>
                                     </Stack>
                                 }
@@ -70,5 +66,4 @@ export default function Login({status, canResetPassword}: LoginPageProps) {
                 </Grid>
             </Box>
         </PageContainer>
-    );
-};
+    )};
