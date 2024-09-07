@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Club;
+use App\Models\Department;
 use App\Models\Faculty;
 use App\Models\GraduateStandard;
 use App\Models\Program;
@@ -20,5 +22,7 @@ class DatabaseSeeder extends Seeder
         Faculty::factory(10)->create();
         Program::factory(10)->create();
         GraduateStandard::factory(10)->create();
+        Club::factory(10)->create();
+        Department::factory(10)->create();
     }
 }

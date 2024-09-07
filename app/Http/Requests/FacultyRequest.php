@@ -10,7 +10,7 @@ class FacultyRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'link' => ['required'],
+            'link' => ['required','url'],
             'description' => ['required'],
         ];
     }

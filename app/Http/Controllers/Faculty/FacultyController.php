@@ -44,7 +44,7 @@ class FacultyController extends Controller
 
     private function modelToDto(Faculty $faculty)
     {
-        return new FacultyDto($faculty->id, $faculty->name, $faculty->link, $faculty->description, $faculty->programs->toArray(), $faculty->graduateStandards->toArray());
+        return new FacultyDto($faculty->id, $faculty->name, $faculty->link, $faculty->description, $faculty->programs()->getModels(), $faculty->graduateStandards()->getModels());
     }
 
 }
