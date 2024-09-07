@@ -3,7 +3,8 @@ import {Grid, Box, Card, Stack, Typography} from '@mui/material';
 
 // components
 import PageContainer from '@/Components/container/PageContainer';
-import AuthLogin from './AuthLogin';
+import AuthLogin from '../../Components/auth/AuthLogin';
+import {Logo} from "@/Components/Logo";
 
 interface LoginPageProps {
     status?: string;
@@ -41,8 +42,7 @@ export default function Login({status, canResetPassword}: LoginPageProps) {
                     >
                         <Card elevation={9} sx={{p: 4, zIndex: 1, width: '100%', maxWidth: '450px'}}>
                             <Box display="flex" alignItems="center" justifyContent="center">
-                                {/*<Logo />*/}
-                                LOGO HERE
+                                <Logo/>
                             </Box>
                             <AuthLogin
                                 canResetPassword={canResetPassword}

@@ -1,7 +1,8 @@
 import { Grid, Box, Card, Typography, Stack } from '@mui/material';
 import PageContainer from '@/Components/container/PageContainer';
-import AuthRegister from './AuthRegister';
+import AuthRegister from '../../Components/auth/AuthRegister';
 import {Link} from "@inertiajs/react";
+import {Logo} from "@/Components/Logo";
 
 export default function Register() {
     return(
@@ -34,7 +35,7 @@ export default function Register() {
                     >
                         <Card elevation={9} sx={{ p: 4, zIndex: 1, width: '100%', maxWidth: '450px' }}>
                             <Box display="flex" alignItems="center" justifyContent="center">
-                                {"Logo here"}
+                               <Logo />
                             </Box>
                             <AuthRegister
                                 subtext={
