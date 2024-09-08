@@ -23,6 +23,11 @@ class Thread extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function messages(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ThreadMessage::class);
+    }
+
     protected function casts(): array
     {
         return [

@@ -16,10 +16,11 @@ Route::prefix('auth')->group(function () {
 Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('faculties', FacultyController::class);
     Route::apiResource('faculties.programs', ProgramController::class);
-    Route::apiResource('faculties.graduate_standards', GraduateStandardController::class);
+    Route::apiResource('faculties.graduate-standards', GraduateStandardController::class);
     Route::apiResource('clubs', ClubController::class);
     Route::apiResource('departments', DepartmentController::class);
     Route::apiResource('threads', ThreadController::class);
+    Route::apiResource('threads.messages', \App\Http\Controllers\Chatbot\ThreadMessageController::class);
 });
 
 

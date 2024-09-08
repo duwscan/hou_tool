@@ -20,23 +20,25 @@ class GraduateStandardController extends Controller
     public function index(Faculty $faculty)
     {
         $graduateStandards = GraduateStandard::all()->map(fn($graduateStandard) => $this->mapModelToDto($graduateStandard));
-        return $this->sendResponse($graduateStandards, 'Graduate Standards retrieved successfully', 'graduate_standard');
+        return $this->sendResponse($graduateStandards, 'Graduate Standards retrieved successfully');
     }
 
     public function store(Faculty $faculty ,GraduateStandardRequest $request)
     {
-        return $this->sendResponse(GraduateStandard::create($request->validated()+['faculty_id'=>$faculty->id]), 'Graduate Standards create successfully', 'graduate_standard');
+        $graduateStandard = GraduateStandard::create($request->validated()+['faculty_id'=>$faculty->id]);
+        return $this->sendResponse($this->mapModelToDto($graduateStandard)->toArray(), 'Graduate Standards create successfully');
     }
 
     public function show(Faculty $faculty,GraduateStandard $graduateStandard)
     {
-        return $this->sendResponse($graduateStandard, 'Graduate Standard retrieved successfully', 'graduate_standard');
+
+        return $this->sendResponse($this->mapModelToDto($graduateStandard)->toArray(), 'Graduate Standard retrieved successfully', );
     }
 
     public function update(GraduateStandardRequest $request,Faculty $faculty, GraduateStandard $graduateStandard)
     {
         $graduateStandard->update($request->validated());
-        return $this->sendResponse($graduateStandard, 'Graduate Standard updated successfully', 'graduate_standard');
+        return $this->sendResponse($this->mapModelToDto($graduateStandard), 'Graduate Standard updated successfully', );
     }
 
     public function destroy(GraduateStandard $graduateStandard)

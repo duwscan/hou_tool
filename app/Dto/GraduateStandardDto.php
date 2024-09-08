@@ -19,4 +19,16 @@ class GraduateStandardDto
         $this->filePath = $graduateStandard->file_path;
     }
 
+    public function toArray(): array
+    {
+        return [
+            'graduateStandard'=>[
+                'id' => $this->id,
+                'facultyId' => $this->facultyId,
+                'name' => $this->name,
+                'filePath' => $this->filePath,
+            ]
+        ];
+    }
+
 }

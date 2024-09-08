@@ -16,4 +16,15 @@ class ClubDto
         $this->name = $club->name;
         $this->detail = $club->detail;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'club'=>[
+                'id' => $this->id,
+                'name' => $this->name,
+                'detail' => $this->detail,
+            ]
+        ];
+    }
 }

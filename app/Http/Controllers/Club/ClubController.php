@@ -11,31 +11,29 @@ class ClubController extends Controller
 {
     public function index()
     {
-        $clubs = Club::all()->map(fn($club) => $this->mapModelToDto($club));
+        $clubs = Club::all()->map(fn($club) => $this->mapModelToDto($club)->toArray());
         return $this->sendResponse($clubs, 'Clubs retrieved successfully.');
     }
 
     public function store(ClubRequest $request)
     {
-        return $this->sendResponse(Club::create($request->validated()), 'Club created successfully.', 'club',201);
+        return $this->sendResponse($this->mapModelToDto(Club::create($request->validated())->toArray()), 'Club created successfully.', 'club', 201);
     }
 
     public function show(Club $club)
     {
-        return $this->sendResponse($club, 'Club retrieved successfully.');
+        return $this->sendResponse($this->mapModelToDto($club)->toArray(), 'Club retrieved successfully.');
     }
 
     public function update(ClubRequest $request, Club $club)
     {
         $club->update($request->validated());
-
-        return $this->sendResponse($club, 'Club updated successfully.');
+        return $this->sendResponse($this->mapModelToDto($club)->toArray(), 'Club updated successfully.');
     }
 
     public function destroy(Club $club)
     {
         $club->delete();
-
         return $this->sendResponse([], 'Club deleted successfully.');
     }
 

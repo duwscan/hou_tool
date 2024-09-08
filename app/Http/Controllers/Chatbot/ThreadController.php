@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ThreadController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Thread::class);
+    }
+
     public function index()
     {
         $threads = Auth::user()->threads()->get()->map(fn($thread)=>new ThreadDto($thread));

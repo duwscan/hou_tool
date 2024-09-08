@@ -19,5 +19,17 @@ class ProgramDto
         $this->filePath = $program->file_path;
     }
 
+    public function toArray(): array
+    {
+        return [
+            'program'=>[
+                'id' => $this->id,
+                'facultyId' => $this->facultyId,
+                'name' => $this->name,
+                'filePath' => $this->filePath,
+            ]
+        ];
+    }
+
 
 }
