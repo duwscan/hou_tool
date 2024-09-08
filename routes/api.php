@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthTest\AuthController;
+use App\Http\Controllers\Chatbot\ThreadController;
 use App\Http\Controllers\Club\ClubController;
 use App\Http\Controllers\Department\DepartmentController;
 use App\Http\Controllers\Faculty\FacultyController;
@@ -18,6 +19,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('faculties.graduate_standards', GraduateStandardController::class);
     Route::apiResource('clubs', ClubController::class);
     Route::apiResource('departments', DepartmentController::class);
+    Route::apiResource('threads', ThreadController::class);
 });
 
 

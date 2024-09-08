@@ -9,7 +9,6 @@ class ProgramRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'faculty_id' => ['required', 'exists:faculties'],
             'name' => ['required'],
             'file_path' => ['required'],
         ];

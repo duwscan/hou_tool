@@ -4,13 +4,13 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GraduateStandardRequest extends FormRequest
+class ThreadRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'name' => ['required'],
-            'file_path' => ['required'],
+            'thread_name' => ['required'],
+            'created_at' => ['date'],
         ];
     }
 

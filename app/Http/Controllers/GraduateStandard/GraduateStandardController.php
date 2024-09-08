@@ -23,9 +23,9 @@ class GraduateStandardController extends Controller
         return $this->sendResponse($graduateStandards, 'Graduate Standards retrieved successfully', 'graduate_standard');
     }
 
-    public function store(GraduateStandardRequest $request)
+    public function store(Faculty $faculty ,GraduateStandardRequest $request)
     {
-        return $this->sendResponse(GraduateStandard::create($request->validated()), 'Graduate Standards retrieved successfully', 'graduate_standard');
+        return $this->sendResponse(GraduateStandard::create($request->validated()+['faculty_id'=>$faculty->id]), 'Graduate Standards create successfully', 'graduate_standard');
     }
 
     public function show(Faculty $faculty,GraduateStandard $graduateStandard)

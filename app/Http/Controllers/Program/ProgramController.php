@@ -22,9 +22,9 @@ class ProgramController extends Controller
         return $this->sendResponse($programs, 'Programs retrieved successfully.', 'programs');
     }
 
-    public function store(ProgramRequest $request)
+    public function store(Faculty $faculty ,ProgramRequest $request)
     {
-        return $this->sendResponse(Program::create($request->validated()), 'Program created successfully.', 'program', 201);
+        return $this->sendResponse(Program::create($request->validated()+['faculty_id'=>$faculty->id]), 'Program created successfully.', 'program', 201);
     }
 
     public function show(Faculty $faculty,Program $program)

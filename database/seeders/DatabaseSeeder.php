@@ -7,6 +7,8 @@ use App\Models\Department;
 use App\Models\Faculty;
 use App\Models\GraduateStandard;
 use App\Models\Program;
+use App\Models\Thread;
+use App\Models\ThreadMessage;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -24,5 +26,7 @@ class DatabaseSeeder extends Seeder
         GraduateStandard::factory(10)->create();
         Club::factory(10)->create();
         Department::factory(10)->create();
+        Thread::factory(10)->create();
+        ThreadMessage::factory(10)->create();
     }
 }
