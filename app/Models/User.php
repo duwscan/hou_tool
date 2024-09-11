@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Dto\NewPostDto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -64,4 +65,18 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Thread::class);
     }
+
+    public function posts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function newPost(NewPostDto $data) : Post{
+       return $this->posts()->create([
+            'tittle' => $data->tittle,
+            'body' => $data->body,
+            'slug' => $data->slug,
+        ]);
+    }
 }
+
