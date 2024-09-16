@@ -21,6 +21,4 @@ class ListFaculties extends ListRecords
     {
         return 'Danh sách';
     }
-
-
 }

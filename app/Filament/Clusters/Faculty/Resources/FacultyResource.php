@@ -6,6 +6,8 @@ use App\Filament\Actions\CustomDeleteAction;
 use App\Filament\Clusters\Faculty\Resources\FacultyResource\Pages\CreateFaculty;
 use App\Filament\Clusters\Faculty\Resources\FacultyResource\Pages\EditFaculty;
 use App\Filament\Clusters\Faculty\Resources\FacultyResource\Pages\ListFaculties;
+use App\Filament\Resources\FacultyResource\Pages\FacultyDetail;
+use App\Filament\Resources\FacultyResource\Pages\ViewFaculty;
 use App\Models\Faculty;
 use Filament\Forms;
 use Filament\Forms\Components\Textarea;
@@ -51,7 +53,10 @@ class FacultyResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()->label("Chi tiết"),
+                Tables\Actions\ViewAction::make()
+                    ->label("Chi tiết")
+                    ->modal(false)
+                    ->url(fn($record) => route('filament.admin.faculty.resources.faculties.view', $record)),
                 Tables\Actions\EditAction::make()->label("Sửa"),
                 CustomDeleteAction::make()->label("Xóa"),
             ])
@@ -76,6 +81,7 @@ class FacultyResource extends Resource
             'index' => ListFaculties::route('/'),
             'create' => CreateFaculty::route('/create'),
             'edit' => EditFaculty::route('/{record}/edit'),
+            'view'=> ViewFaculty::route('/{record}'),
         ];
     }
 
