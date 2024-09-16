@@ -12,12 +12,12 @@ class ProgramPolicy
 {
 
 
-    private Faculty $faculty;
-
-    public function __construct(Request $request)
-    {
-        $this->faculty = $request->faculty;
-    }
+//    private Faculty $faculty;
+//
+//    public function __construct(Request $request)
+//    {
+//        $this->faculty = $request->faculty;
+//    }
 
 
     /**
@@ -30,7 +30,7 @@ class ProgramPolicy
 
     public function view(User $user, Program $program)
     {
-        return $program->falcuty_id == $this ->faculty->id ? Response::allow('Succesfully') : Response::denyAsNotFound('Not found');
+        return true;
     }
 
     /**
@@ -41,14 +41,14 @@ class ProgramPolicy
         return true;
     }
 
-    public function update(User $user, Program $program): Response
+    public function update(User $user, Program $program): bool
     {
-        return $program->falcuty_id == $this ->faculty->id ? Response::allow('Succesfully') : Response::deny('Not found');
+        return true;
     }
 
-    public function delete(User $user, Program $program): Response
+    public function delete(User $user, Program $program): bool
     {
-        return $program->falcuty_id == $this ->faculty->id ? Response::allow('Succesfully') : Response::deny('Not found');
+        return true;
     }
 
     public function restore(User $user, Program $program): bool
@@ -56,8 +56,8 @@ class ProgramPolicy
         return true;
     }
 
-    public function forceDelete(User $user, Program $program): Response
+    public function forceDelete(User $user, Program $program): bool
     {
-        return $program->falcuty_id == $this ->faculty->id ? Response::allow('Succesfully') : Response::deny('Not found');
+        return true;
     }
 }
