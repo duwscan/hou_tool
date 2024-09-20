@@ -2,6 +2,8 @@
 
 namespace App\Dto;
 
+use App\Models\Faculty;
+
 class FacultyDto
 {
     public int $id;
@@ -11,13 +13,24 @@ class FacultyDto
     public array $programs;
     public array $graduateStandards;
 
-    public function __construct(int $id, string $name, string $url, string $description, array $programs, array $graduateStandards)
+    public function __construct(Faculty $faculty)
     {
-        $this->id = $id;
-        $this->name = $name;
-        $this->url = $url;
-        $this->description = $description;
-        $this->programs = $programs;
-        $this->graduateStandards = $graduateStandards;
+        $this->id = $faculty->id;
+        $this->name = $faculty->name;
+        $this->description = $faculty->description;
+        $this->programs = $faculty->programs;
+        $this->graduateStandards = $faculty->graduateStandards;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'faculty'=>[
+                'id' => $this->id,
+                'name' => $this->name,
+                'description' => $this->description,
+            ]
+        ];
+    }
+
 }

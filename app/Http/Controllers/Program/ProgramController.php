@@ -24,18 +24,19 @@ class ProgramController extends Controller
 
     public function store(Faculty $faculty ,ProgramRequest $request)
     {
-        return $this->sendResponse(Program::create($request->validated()+['faculty_id'=>$faculty->id]), 'Program created successfully.', 'program', 201);
+        $program = Program::create($request->validated()+['faculty_id'=>$faculty->id]);
+        return $this->sendResponse($this->mapModelToDto($program)->toArray(), 'Program created successfully.', 'program', 201);
     }
 
     public function show(Faculty $faculty,Program $program)
     {
-        return $this->sendResponse($program,'Program retrieved successfully','program');
+        return $this->sendResponse($this->mapModelToDto($program)->toArray(),'Program retrieved successfully','program');
     }
 
     public function update(ProgramRequest $request,Faculty $faculty, Program $program)
     {
         $program->update($request->validated());
-        return $this->sendResponse($program, 'Program updated successfully.', 'program');
+        return $this->sendResponse($this->mapModelToDto($program)->toArray(), 'Program updated successfully.', 'program');
     }
 
     public function destroy(Faculty $faculty,Program $program)

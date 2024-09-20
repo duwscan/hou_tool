@@ -16,4 +16,15 @@ class DepartmentDto
         $this->name = $department->name;
         $this->detail = $department->detail;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'department'=>[
+                'id' => $this->id,
+                'name' => $this->name,
+                'detail' => $this->detail,
+            ]
+        ];
+    }
 }
