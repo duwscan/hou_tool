@@ -1,6 +1,6 @@
 import { Grid, Box, Card, Typography, Stack } from '@mui/material';
 import PageContainer from '@/Components/container/PageContainer';
-import AuthRegister from '../../Components/auth/AuthRegister';
+import AuthRegister from '@/Components/forms/auth/AuthRegister';
 import {Link} from "@inertiajs/react";
 import {Logo} from "@/Components/Logo";
 

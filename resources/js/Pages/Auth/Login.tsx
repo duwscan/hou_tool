@@ -3,7 +3,7 @@ import {Grid, Box, Card, Stack, Typography} from '@mui/material';
 
 // components
 import PageContainer from '@/Components/container/PageContainer';
-import AuthLogin from '../../Components/auth/AuthLogin';
+import AuthLogin from '@/Components/forms/auth/AuthLogin';
 import {Logo} from "@/Components/Logo";
 
 interface LoginPageProps {

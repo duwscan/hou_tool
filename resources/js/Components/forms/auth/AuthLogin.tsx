@@ -110,7 +110,7 @@ const AuthLogin = ({title, subtitle, subtext, status, canResetPassword}: loginTy
                         (
                             <Typography
                                 component={Link}
-                                href="/auth/auth1/forgot-password"
+                                href={route('password.request')}
                                 fontWeight="500"
                                 sx={{
                                     textDecoration: "none",

@@ -49,7 +49,6 @@ const AuthRegister = ({title, subtitle, subtext}: registerType) => {
             </Box>
             <form onSubmit={handleSubmit}>
                 <Box>
-
                     <Stack mb={3}>
                         <CustomFormLabel htmlFor="name">Name</CustomFormLabel>
                         <CustomTextField
