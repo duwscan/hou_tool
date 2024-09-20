@@ -1,8 +1,76 @@
 {
-  "hash": "41ac5d39",
+  "hash": "c96edd6e",
   "configHash": "1462262f",
-  "lockfileHash": "e3b0c442",
-  "browserHash": "06d80215",
-  "optimized": {},
-  "chunks": {}
+  "lockfileHash": "7f4be3ed",
+  "browserHash": "449adf02",
+  "optimized": {
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "2471ce96",
+      "needsInterop": true
+    },
+    "@inertiajs/react": {
+      "src": "../../node_modules/@inertiajs/react/dist/index.esm.js",
+      "file": "@inertiajs_react.js",
+      "fileHash": "1dfb10c6",
+      "needsInterop": false
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "b63ad919",
+      "needsInterop": true
+    },
+    "laravel-vite-plugin/inertia-helpers": {
+      "src": "../../node_modules/laravel-vite-plugin/inertia-helpers/index.js",
+      "file": "laravel-vite-plugin_inertia-helpers.js",
+      "fileHash": "8ab3e41c",
+      "needsInterop": false
+    },
+    "axios": {
+      "src": "../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "08bb0259",
+      "needsInterop": false
+    },
+    "@mui/material": {
+      "src": "../../node_modules/@mui/material/index.js",
+      "file": "@mui_material.js",
+      "fileHash": "38897f3c",
+      "needsInterop": false
+    },
+    "next/link": {
+      "src": "../../node_modules/next/link.js",
+      "file": "next_link.js",
+      "fileHash": "9feba5ae",
+      "needsInterop": true
+    },
+    "@mui/system": {
+      "src": "../../node_modules/@mui/system/esm/index.js",
+      "file": "@mui_system.js",
+      "fileHash": "73fbe0c0",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-7TM37MZ6": {
+      "file": "chunk-7TM37MZ6.js"
+    },
+    "chunk-PVMDKXUB": {
+      "file": "chunk-PVMDKXUB.js"
+    },
+    "chunk-CELF62CH": {
+      "file": "chunk-CELF62CH.js"
+    },
+    "chunk-LKAFMDDI": {
+      "file": "chunk-LKAFMDDI.js"
+    },
+    "chunk-NZ77QT6V": {
+      "file": "chunk-NZ77QT6V.js"
+    },
+    "chunk-V4OQ3NZ2": {
+      "file": "chunk-V4OQ3NZ2.js"
+    }
+  }
 }
