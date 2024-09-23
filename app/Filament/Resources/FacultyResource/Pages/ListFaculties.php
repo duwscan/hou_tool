@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Filament\Clusters\Faculty\Resources\FacultyResource\Pages;
+namespace App\Filament\Resources\FacultyResource\Pages;
 
-use App\Filament\Clusters\Faculty\Resources\FacultyResource;
+use App\Filament\Resources\FacultyResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Resources\Pages\PageRegistration;
+use Guava\FilamentNestedResources\Concerns\NestedPage;
 
 class ListFaculties extends ListRecords
 {
@@ -21,4 +23,5 @@ class ListFaculties extends ListRecords
     {
         return 'Danh sách';
     }
+
 }

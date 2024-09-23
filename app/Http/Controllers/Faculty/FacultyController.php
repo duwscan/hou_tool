@@ -20,24 +20,24 @@ class FacultyController extends Controller
     public function store(FacultyRequest $request)
     {
         $faculty = Faculty::create($request->validated());
-        return $this->sendResponse($this->modelToDto($faculty)->toArray(), 'Faculty created successfully.','faculty', 201);
+        return $this->sendResponse($this->modelToDto($faculty)->toArray(), 'School created successfully.','faculty', 201);
     }
 
     public function show(Faculty $faculty)
     {
-        return $this->sendResponse($this->modelToDto($faculty)->toArray(), 'Faculty retrieved successfully.','faculty');
+        return $this->sendResponse($this->modelToDto($faculty)->toArray(), 'School retrieved successfully.','faculty');
     }
 
     public function update(FacultyRequest $request, Faculty $faculty)
     {
         $faculty->update($request->validated());
-         return $this->sendResponse($this->modelToDto($faculty)->toArray(), 'Faculty updated successfully.','faculty');
+         return $this->sendResponse($this->modelToDto($faculty)->toArray(), 'School updated successfully.','faculty');
     }
 
     public function destroy(Faculty $faculty)
     {
         $faculty->delete();
-        return $this->sendResponse([], 'Faculty deleted successfully.', 204);
+        return $this->sendResponse([], 'School deleted successfully.', 204);
     }
 
     private function modelToDto(Faculty $faculty)

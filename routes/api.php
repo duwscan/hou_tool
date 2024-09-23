@@ -24,6 +24,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::prefix('forum')->group(function (){
         Route::apiResource('tags', \App\Http\Controllers\Tag\TagController::class);
         Route::apiResource('posts', \App\Http\Controllers\Post\PostController::class);
+        Route::apiResource('posts.replies', \App\Http\Controllers\Reply\ReplyController::class);
     });
 });
 

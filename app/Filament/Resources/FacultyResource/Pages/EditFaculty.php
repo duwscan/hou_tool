@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Clusters\Faculty\Resources\FacultyResource\Pages;
+namespace App\Filament\Resources\FacultyResource\Pages;
 
-use App\Filament\Clusters\Faculty\Resources\FacultyResource;
+use App\Filament\Resources\FacultyResource;
 use App\HandleCrudFilament;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Guava\FilamentNestedResources\Concerns\NestedPage;
 
 class EditFaculty extends EditRecord
 {
-    use HandleCrudFilament;
     protected static string $resource = FacultyResource::class;
     protected ?string $heading="Chỉnh sửa khoa";
 

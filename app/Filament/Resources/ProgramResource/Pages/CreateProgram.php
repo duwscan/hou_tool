@@ -1,11 +1,8 @@
 <?php
 
-namespace App\Filament\Clusters\Faculty\Resources\ProgramResource\Pages;
+namespace App\Filament\Resources\ProgramResource\Pages;
 
-use App\Filament\Clusters\Faculty\Resources\ProgramResource;
-use Filament\Actions;
-use Filament\Actions\Action;
-use Filament\Actions\CreateAction;
+use App\Filament\Resources\ProgramResource;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateProgram extends CreateRecord

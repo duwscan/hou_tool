@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Filament\Clusters\Faculty\Resources\ProgramResource\Pages;
+namespace App\Filament\Resources\ProgramResource\Pages;
 
-use App\Filament\Clusters\Faculty\Resources\ProgramResource;
+use App\Filament\Resources\ProgramResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
-use Illuminate\Contracts\View\View;
 
 class ListPrograms extends ListRecords
 {

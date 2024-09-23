@@ -1,31 +1,40 @@
 <?php
 
-namespace App\Filament\Clusters\Faculty\Resources;
+namespace App\Filament\Resources;
 
 use App\Filament\Actions\CustomDeleteAction;
-use App\Filament\Clusters\Faculty\Resources\FacultyResource\Pages\CreateFaculty;
-use App\Filament\Clusters\Faculty\Resources\FacultyResource\Pages\EditFaculty;
-use App\Filament\Clusters\Faculty\Resources\FacultyResource\Pages\ListFaculties;
-use App\Filament\Resources\FacultyResource\Pages\FacultyDetail;
+use App\Filament\Resources\FacultyResource\Pages\CreateFaculty;
+use App\Filament\Resources\FacultyResource\Pages\EditFaculty;
+use App\Filament\Resources\FacultyResource\Pages\ListFaculties;
 use App\Filament\Resources\FacultyResource\Pages\ViewFaculty;
+use App\Filament\Resources\FacultyResource\RelationManagers\GraduateStandardsRelationManager;
+use App\Filament\Resources\FacultyResource\RelationManagers\ProgramsRelationManager;
+use App\Filament\Resources\GraduateStandardResource\Pages\CreateGraduateStandard;
+use App\Filament\Resources\GraduateStandardResource\Pages\EditGraduateStandard;
+use App\Filament\Resources\GraduateStandardResource\Pages\ListGraduateStandards;
 use App\Models\Faculty;
+use App\Models\GraduateStandard;
 use Filament\Forms;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
-use Filament\Pages\SubNavigationPosition;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Model;
 
 class FacultyResource extends Resource
 {
     protected static ?string $model = Faculty::class;
     protected static ?string $navigationIcon = 'heroicon-o-home-modern';
-
-    protected static ?string $cluster = \App\Filament\Clusters\Faculty::class;
-    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?string $navigationGroup="Tiện ích";
     protected static ?string $pluralModelLabel = 'Khoa';
 
+    public static function getRecordTitle(?Model $record): string|null|Htmlable
+    {
+        return $record->name;
+    }
 
     public static function form(Form $form): Form
     {
@@ -34,10 +43,10 @@ class FacultyResource extends Resource
                 Forms\Components\TextInput::make('name')->label("Tên Khoa")->required(),
                 Forms\Components\TextInput::make('link')->label("Trang Chủ")->required()->url(),
                 Textarea::make('description')
-                ->label('Mô tả')
-                ->placeholder('Viết mô tả cho khoa')
-                ->rows(5)
-                ->required(),
+                    ->label('Mô tả')
+                    ->placeholder('Viết mô tả cho khoa')
+                    ->rows(5)
+                    ->required(),
             ])->columns(1);
     }
 
@@ -56,7 +65,7 @@ class FacultyResource extends Resource
                 Tables\Actions\ViewAction::make()
                     ->label("Chi tiết")
                     ->modal(false)
-                    ->url(fn($record) => route('filament.admin.faculty.resources.faculties.view', $record)),
+                    ->url(fn($record) => route('filament.admin.resources.faculties.view', $record)),
                 Tables\Actions\EditAction::make()->label("Sửa"),
                 CustomDeleteAction::make()->label("Xóa"),
             ])
@@ -71,7 +80,8 @@ class FacultyResource extends Resource
     public static function getRelations(): array
     {
         return [
-
+            GraduateStandardsRelationManager::class,
+            ProgramsRelationManager::class,
         ];
     }
 
@@ -81,10 +91,7 @@ class FacultyResource extends Resource
             'index' => ListFaculties::route('/'),
             'create' => CreateFaculty::route('/create'),
             'edit' => EditFaculty::route('/{record}/edit'),
-            'view'=> ViewFaculty::route('/{record}'),
+            'view' => ViewFaculty::route('/{record}'),
         ];
     }
-
-
-
 }

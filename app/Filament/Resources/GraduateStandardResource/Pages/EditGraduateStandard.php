@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Filament\Clusters\Faculty\Resources\GraduateStandardResource\Pages;
+namespace App\Filament\Resources\GraduateStandardResource\Pages;
 
-use App\Filament\Clusters\Faculty\Resources\GraduateStandardResource;
+use App\Filament\HasParentResource;
+use App\Filament\Resources\GraduateStandardResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Guava\FilamentNestedResources\Concerns\NestedPage;
 
 class EditGraduateStandard extends EditRecord
 {
@@ -18,8 +20,4 @@ class EditGraduateStandard extends EditRecord
         ];
     }
 
-    protected function getRedirectUrl(): string
-    {
-        return $this->previousUrl ?? $this->getResource()::getUrl('index');
-    }
 }

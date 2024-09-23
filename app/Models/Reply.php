@@ -14,7 +14,6 @@ class Reply extends Model
         'id',
         'user_id',
         'body',
-        'reply_id',
         'post_id',
     ];
 
@@ -23,10 +22,6 @@ class Reply extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function reply(): BelongsTo
-    {
-        return $this->belongsTo(Reply::class);
-    }
 
     public function post(): BelongsTo
     {

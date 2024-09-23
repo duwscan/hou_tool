@@ -2,9 +2,7 @@
 
 namespace App\Filament\Resources\ClubResource\Pages;
 
-use App\Filament\Clusters\Faculty\Resources\FacultyResource;
 use App\Filament\Resources\ClubResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateClub extends CreateRecord

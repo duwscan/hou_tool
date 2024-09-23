@@ -1,16 +1,13 @@
 <?php
 
-namespace App\Filament\Clusters\Faculty\Resources\FacultyResource\Pages;
+namespace App\Filament\Resources\FacultyResource\Pages;
 
-use App\Filament\Clusters\Faculty\Resources\FacultyResource;
-use Filament\Actions\Action;
-use Filament\Actions\CreateAction;
+use App\Filament\Resources\FacultyResource;
 use Filament\Resources\Pages\CreateRecord;
-use GuzzleHttp\Promise\Create;
+use Guava\FilamentNestedResources\Concerns\NestedPage;
 
 class CreateFaculty extends CreateRecord
 {
-
     protected static string $resource = FacultyResource::class;
     protected ?string $heading = "Tạo mới Khoa";
 

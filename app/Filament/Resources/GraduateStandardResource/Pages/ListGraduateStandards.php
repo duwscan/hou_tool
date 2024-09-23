@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Filament\Clusters\Faculty\Resources\GraduateStandardResource\Pages;
+namespace App\Filament\Resources\GraduateStandardResource\Pages;
 
-use App\Filament\Clusters\Faculty\Resources\GraduateStandardResource;
+use App\Filament\HasParentResource;
+use App\Filament\Resources\GraduateStandardResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
@@ -13,7 +14,7 @@ class ListGraduateStandards extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()->label('Thêm chuẩn đầu ra'),
+            Actions\CreateAction::make(),
         ];
     }
 
@@ -21,4 +22,5 @@ class ListGraduateStandards extends ListRecords
     {
         return 'Danh sách';
     }
+
 }

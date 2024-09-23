@@ -1,38 +1,31 @@
 <?php
 
-namespace App\Filament\Clusters\Faculty\Resources;
-
-use App\Filament\Clusters\Faculty;
-use App\Filament\Clusters\Faculty\Resources\GraduateStandardResource\Pages;
-use App\Filament\Clusters\Faculty\Resources\GraduateStandardResource\RelationManagers;
+namespace App\Filament\Resources;
+use App\Filament\Resources\GraduateStandardResource\Pages\CreateGraduateStandard;
+use App\Filament\Resources\GraduateStandardResource\Pages\EditGraduateStandard;
+use App\Filament\Resources\GraduateStandardResource\Pages\ListGraduateStandards;
 use App\Models\GraduateStandard;
-use Filament\Actions\DeleteAction;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Pages\SubNavigationPosition;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Support\Htmlable;
 
 class GraduateStandardResource extends Resource
 {
+
     protected static ?string $model = GraduateStandard::class;
     protected static ?string $pluralModelLabel = 'Chuẩn đầu ra';
     protected static ?string $navigationIcon = 'heroicon-o-book-open';
 
-    protected static ?string $cluster = Faculty::class;
-    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('faculty_id')
-                    ->relationship('faculty', 'name')
-                    ->required()
-                ->label('Khoa'),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255)
@@ -61,9 +54,9 @@ class GraduateStandardResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->label("Sửa"),
                 Tables\Actions\DeleteAction::make()->label("Xóa"),
                 Tables\Actions\ViewAction::make()->label("Chi tiết"),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -84,9 +77,11 @@ class GraduateStandardResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListGraduateStandards::route('/'),
-            'create' => Pages\CreateGraduateStandard::route('/create'),
-            'edit' => Pages\EditGraduateStandard::route('/{record}/edit'),
+            'index' => ListGraduateStandards::route('/'),
+            'create' => CreateGraduateStandard::route('/create'),
+            'edit' => EditGraduateStandard::route('/{record}/edit'),
         ];
     }
+
+
 }

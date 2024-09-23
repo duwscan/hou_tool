@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Clusters\Faculty\Resources;
+namespace App\Filament\Resources;
 
-use App\Filament\Clusters\Faculty;
 use App\Filament\Clusters\Faculty\Resources\ProgramResource\Pages;
+use App\Filament\Clusters\School;
 use App\Models\Program;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -17,10 +17,10 @@ class ProgramResource extends Resource
     protected static ?string $model = Program::class;
     protected static ?string $navigationIcon = 'heroicon-o-bookmark-square';
     protected static ?string $pluralModelLabel = 'Chương trình đào tạo';
+    protected static bool $shouldSkipAuthorization = true;
+    protected static bool $shouldRegisterNavigation = false;
 
-    protected static ?string $cluster = Faculty::class;
-    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
-
+    protected static ?string $navigationGroup="Tiện ích";
     public static function form(Form $form): Form
     {
         return $form
@@ -80,9 +80,9 @@ class ProgramResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPrograms::route('/'),
-            'create' => Pages\CreateProgram::route('/create'),
-            'edit' => Pages\EditProgram::route('/{record}/edit'),
+            'index' => \App\Filament\Resources\ProgramResource\Pages\ListPrograms::route('/'),
+            'create' => \App\Filament\Resources\ProgramResource\Pages\CreateProgram::route('/create'),
+            'edit' => \App\Filament\Resources\ProgramResource\Pages\EditProgram::route('/{record}/edit'),
         ];
     }
 }

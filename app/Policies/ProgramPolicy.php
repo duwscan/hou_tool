@@ -10,14 +10,11 @@ use Illuminate\Http\Request;
 
 class ProgramPolicy
 {
-
-
-//    private Faculty $faculty;
-//
-//    public function __construct(Request $request)
-//    {
-//        $this->faculty = $request->faculty;
-//    }
+    private Faculty $faculty;
+    public function __construct(Request $request)
+    {
+        $this->faculty = $request->faculty;
+    }
 
 
     /**
@@ -30,7 +27,9 @@ class ProgramPolicy
 
     public function view(User $user, Program $program)
     {
-        return true;
+        return $this->faculty->id === $program->faculty_id
+            ? Response::allow('Thành công')
+            : Response::deny('Không thể truy cập');
     }
 
     /**
@@ -41,14 +40,18 @@ class ProgramPolicy
         return true;
     }
 
-    public function update(User $user, Program $program): bool
+    public function update(User $user, Program $program): Response
     {
-        return true;
+        return $this->faculty->id === $program->faculty_id
+            ? Response::allow('Thành công')
+            : Response::deny('Không thể truy cập');
     }
 
-    public function delete(User $user, Program $program): bool
+    public function delete(User $user, Program $program): Response
     {
-        return true;
+        return $this->faculty->id === $program->faculty_id
+            ? Response::allow('Thành công')
+            : Response::deny('Không thể truy cập');
     }
 
     public function restore(User $user, Program $program): bool
