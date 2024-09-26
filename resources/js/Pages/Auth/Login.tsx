@@ -1,74 +1,93 @@
-import {Link, useForm} from '@inertiajs/react'
-import {Grid, Box, Card, Stack, Typography} from '@mui/material';
+import { FormEventHandler } from 'react';
+import Checkbox from '@/components/Checkbox';
+import GuestLayout from '@/Layouts/GuestLayout';
+import InputError from '@/components/InputError';
+import InputLabel from '@/components/InputLabel';
+import PrimaryButton from '@/components/PrimaryButton';
+import TextInput from '@/components/TextInput';
+import { Head, Link, useForm } from '@inertiajs/react';
 
-// components
-import PageContainer from '@/Components/container/PageContainer';
-import AuthLogin from '@/Components/forms/auth/AuthLogin';
-import {Logo} from "@/Components/Logo";
+export default function Login({ status, canResetPassword }: { status?: string, canResetPassword: boolean }) {
+    const { data, setData, post, processing, errors, reset } = useForm({
+        email: '',
+        password: '',
+        remember: false,
+    });
 
-interface LoginPageProps {
-    status?: string;
-    canResetPassword: boolean;
-}
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
 
-export default function Login({status, canResetPassword}: LoginPageProps) {
+        post(route('login'), {
+            onFinish: () => reset('password'),
+        });
+    };
+
     return (
-        <PageContainer title="Login Page" description="this is Sample page">
-            <Box
-                sx={{
-                    position: 'relative',
-                    '&:before': {
-                        content: '""',
-                        background: 'radial-gradient(#d2f1df, #d3d7fa, #bad8f4)',
-                        backgroundSize: '400% 400%',
-                        animation: 'gradient 15s ease infinite',
-                        position: 'absolute',
-                        height: '100%',
-                        width: '100%',
-                        opacity: '0.3',
-                    },
-                }}
-            >
-                <Grid container spacing={0} justifyContent="center" sx={{height: '100vh'}}>
-                    <Grid
-                        item
-                        xs={12}
-                        sm={12}
-                        lg={5}
-                        xl={4}
-                        display="flex"
-                        justifyContent="center"
-                        alignItems="center"
-                    >
-                        <Card elevation={9} sx={{p: 4, zIndex: 1, width: '100%', maxWidth: '450px'}}>
-                            <Box display="flex" alignItems="center" justifyContent="center">
-                                <Logo/>
-                            </Box>
-                            <AuthLogin
-                                canResetPassword={canResetPassword}
-                                subtitle={
-                                    <Stack direction="row" spacing={1} justifyContent="center" mt={3}>
-                                        <Typography color="textSecondary" variant="h6" fontWeight="500">
-                                            New to Modernize?
-                                        </Typography>
-                                        <Typography
-                                            component={Link}
-                                            href={route('register')}
-                                            fontWeight="500"
-                                            sx={{
-                                                textDecoration: 'none',
-                                                color: 'primary.main',
-                                            }}
-                                        >
-                                            Create an account
-                                        </Typography>
-                                    </Stack>
-                                }
-                            />
-                        </Card>
-                    </Grid>
-                </Grid>
-            </Box>
-        </PageContainer>
+        <GuestLayout>
+            <Head title="Log in" />
+
+            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+
+            <form onSubmit={submit}>
+                <div>
+                    <InputLabel htmlFor="email" value="Email" />
+
+                    <TextInput
+                        id="email"
+                        type="email"
+                        name="email"
+                        value={data.email}
+                        className="mt-1 block w-full"
+                        autoComplete="username"
+                        isFocused={true}
+                        onChange={(e) => setData('email', e.target.value)}
+                    />
+
+                    <InputError message={errors.email} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="password" value="Password" />
+
+                    <TextInput
+                        id="password"
+                        type="password"
+                        name="password"
+                        value={data.password}
+                        className="mt-1 block w-full"
+                        autoComplete="current-password"
+                        onChange={(e) => setData('password', e.target.value)}
+                    />
+
+                    <InputError message={errors.password} className="mt-2" />
+                </div>
+
+                <div className="block mt-4">
+                    <label className="flex items-center">
+                        <Checkbox
+                            name="remember"
+                            checked={data.remember}
+                            onChange={(e) => setData('remember', e.target.checked)}
+                        />
+                        <span className="ms-2 text-sm text-gray-600">Remember me</span>
+                    </label>
+                </div>
+
+                <div className="flex items-center justify-end mt-4">
+                    {canResetPassword && (
+                        <Link
+                            href={route('password.request')}
+                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        >
+                            Forgot your password?
+                        </Link>
+                    )}
+
+                    <PrimaryButton className="ms-4" disabled={processing}>
+                        Log in
+                    </PrimaryButton>
+                </div>
+            </form>
+        </GuestLayout>
     );
-};
+}

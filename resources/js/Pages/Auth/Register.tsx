@@ -1,70 +1,113 @@
-import { Grid, Box, Card, Typography, Stack } from '@mui/material';
-import PageContainer from '@/Components/container/PageContainer';
-import AuthRegister from '@/Components/forms/auth/AuthRegister';
-import {Link} from "@inertiajs/react";
-import {Logo} from "@/Components/Logo";
+import { FormEventHandler } from 'react';
+import GuestLayout from '@/Layouts/GuestLayout';
+import InputError from '@/components/InputError';
+import InputLabel from '@/components/InputLabel';
+import PrimaryButton from '@/components/PrimaryButton';
+import TextInput from '@/components/TextInput';
+import { Head, Link, useForm } from '@inertiajs/react';
 
 export default function Register() {
-    return(
-        <PageContainer title="Register Page" description="this is Sample page">
-            <Box
-                sx={{
-                    position: 'relative',
-                    '&:before': {
-                        content: '""',
-                        background: 'radial-gradient(#d2f1df, #d3d7fa, #bad8f4)',
-                        backgroundSize: '400% 400%',
-                        animation: 'gradient 15s ease infinite',
-                        position: 'absolute',
-                        height: '100%',
-                        width: '100%',
-                        opacity: '0.3',
-                    },
-                }}
-            >
-                <Grid container spacing={0} justifyContent="center" sx={{ height: '100vh' }}>
-                    <Grid
-                        item
-                        xs={12}
-                        sm={12}
-                        lg={5}
-                        xl={4}
-                        display="flex"
-                        justifyContent="center"
-                        alignItems="center"
+    const { data, setData, post, processing, errors, reset } = useForm({
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+    });
+
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+
+        post(route('register'), {
+            onFinish: () => reset('password', 'password_confirmation'),
+        });
+    };
+
+    return (
+        <GuestLayout>
+            <Head title="Register" />
+
+            <form onSubmit={submit}>
+                <div>
+                    <InputLabel htmlFor="name" value="Name" />
+
+                    <TextInput
+                        id="name"
+                        name="name"
+                        value={data.name}
+                        className="mt-1 block w-full"
+                        autoComplete="name"
+                        isFocused={true}
+                        onChange={(e) => setData('name', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.name} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="email" value="Email" />
+
+                    <TextInput
+                        id="email"
+                        type="email"
+                        name="email"
+                        value={data.email}
+                        className="mt-1 block w-full"
+                        autoComplete="username"
+                        onChange={(e) => setData('email', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.email} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="password" value="Password" />
+
+                    <TextInput
+                        id="password"
+                        type="password"
+                        name="password"
+                        value={data.password}
+                        className="mt-1 block w-full"
+                        autoComplete="new-password"
+                        onChange={(e) => setData('password', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.password} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
+
+                    <TextInput
+                        id="password_confirmation"
+                        type="password"
+                        name="password_confirmation"
+                        value={data.password_confirmation}
+                        className="mt-1 block w-full"
+                        autoComplete="new-password"
+                        onChange={(e) => setData('password_confirmation', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.password_confirmation} className="mt-2" />
+                </div>
+
+                <div className="flex items-center justify-end mt-4">
+                    <Link
+                        href={route('login')}
+                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
-                        <Card elevation={9} sx={{ p: 4, zIndex: 1, width: '100%', maxWidth: '450px' }}>
-                            <Box display="flex" alignItems="center" justifyContent="center">
-                               <Logo />
-                            </Box>
-                            <AuthRegister
-                                subtext={
-                                    <Typography variant="subtitle1" textAlign="center" color="textSecondary" mb={1}>
-                                        Your Social Campaigns
-                                    </Typography>
-                                }
-                                subtitle={
-                                    <Stack direction="row" spacing={1} mt={3}>
-                                        <Typography color="textSecondary" variant="h6" fontWeight="400">
-                                            Already have an Account?
-                                        </Typography>
-                                        <Typography
-                                            component={Link}
-                                            href={route('login')}
-                                            fontWeight="500"
-                                            sx={{
-                                                textDecoration: 'none',
-                                                color: 'primary.main',
-                                            }}
-                                        >
-                                            Sign In
-                                        </Typography>
-                                    </Stack>
-                                }
-                            />
-                        </Card>
-                    </Grid>
-                </Grid>
-            </Box>
-        </PageContainer>
-    )};
+                        Already registered?
+                    </Link>
+
+                    <PrimaryButton className="ms-4" disabled={processing}>
+                        Register
+                    </PrimaryButton>
+                </div>
+            </form>
+        </GuestLayout>
+    );
+}

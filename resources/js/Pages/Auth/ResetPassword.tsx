@@ -1,86 +1,86 @@
-import {Head, Link, useForm} from '@inertiajs/react';
-import TwoStepsBox from "@/Components/TwoStepsBox";
-import useMikTiaForm from "@/ultis/useMikTiaForm";
-import {Button, Stack} from "@mui/material";
-import CustomFormLabel from "@/Components/forms/theme-elements/CustomFormLabel";
-import CustomTextField from "@/Components/forms/theme-elements/CustomTextField";
+import { FormEventHandler } from 'react';
+import GuestLayout from '@/Layouts/GuestLayout';
+import InputError from '@/components/InputError';
+import InputLabel from '@/components/InputLabel';
+import PrimaryButton from '@/components/PrimaryButton';
+import TextInput from '@/components/TextInput';
+import { Head, useForm } from '@inertiajs/react';
 
-export default function ResetPassword({token, email}: { token: string, email: string }) {
-    const {values, post, processing, errors, reset, handleSubmit, handleChange} = useMikTiaForm({
-        initialValues: {
-            token: token,
-            email: email,
-            password: '',
-            password_confirmation: '',
-        },
-        onSubmit: (values) => {
-            post(route('password.store'), {
-                onFinish: () => reset('password', 'password_confirmation'),
-            });
-        }
+export default function ResetPassword({ token, email }: { token: string, email: string }) {
+    const { data, setData, post, processing, errors, reset } = useForm({
+        token: token,
+        email: email,
+        password: '',
+        password_confirmation: '',
     });
 
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+
+        post(route('password.store'), {
+            onFinish: () => reset('password', 'password_confirmation'),
+        });
+    };
+
     return (
-        <TwoStepsBox
-            headerTitle="Reset Password"
-            subTitle="Enter your new password"
-        >
-            <form onSubmit={handleSubmit}>
-                <Stack mt={4} spacing={2}>
-                    <CustomFormLabel htmlFor="email">Email</CustomFormLabel>
-                    <CustomTextField
-                        fullWidth
+        <GuestLayout>
+            <Head title="Reset Password" />
+
+            <form onSubmit={submit}>
+                <div>
+                    <InputLabel htmlFor="email" value="Email" />
+
+                    <TextInput
                         id="email"
-                        readOnly
+                        type="email"
                         name="email"
-                        type="text"
-                        value={values.email}
-                        error={Boolean(errors.email)}
-                        helperText={Boolean(errors.email) && errors.email}
+                        value={data.email}
+                        className="mt-1 block w-full"
+                        autoComplete="username"
+                        onChange={(e) => setData('email', e.target.value)}
                     />
-                    <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
-                    <CustomTextField
-                        fullWidth
+
+                    <InputError message={errors.email} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="password" value="Password" />
+
+                    <TextInput
                         id="password"
+                        type="password"
                         name="password"
-                        type="text"
-                        value={values.password}
-                        onChange={handleChange}
-                        error={Boolean(errors.password)}
-                        helperText={Boolean(errors.password) && errors.password}
+                        value={data.password}
+                        className="mt-1 block w-full"
+                        autoComplete="new-password"
+                        isFocused={true}
+                        onChange={(e) => setData('password', e.target.value)}
                     />
-                    <CustomFormLabel htmlFor="password_confirmation">Password Confirmation</CustomFormLabel>
-                    <CustomTextField
-                        fullWidth
-                        id="password_confirmation"
+
+                    <InputError message={errors.password} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
+
+                    <TextInput
+                        type="password"
                         name="password_confirmation"
-                        type="text"
-                        value={values.password_confirmation}
-                        onChange={handleChange}
-                        error={Boolean(errors.password_confirmation)}
-                        helperText={Boolean(errors.password_confirmation) && errors.password_confirmation}
+                        value={data.password_confirmation}
+                        className="mt-1 block w-full"
+                        autoComplete="new-password"
+                        onChange={(e) => setData('password_confirmation', e.target.value)}
                     />
-                    <Button
-                        disabled={processing}
-                        color="primary"
-                        variant="contained"
-                        size="large"
-                        fullWidth
-                        type={"submit"}
-                    >
+
+                    <InputError message={errors.password_confirmation} className="mt-2" />
+                </div>
+
+                <div className="flex items-center justify-end mt-4">
+                    <PrimaryButton className="ms-4" disabled={processing}>
                         Reset Password
-                    </Button>
-                    <Button
-                        color="primary"
-                        size="large"
-                        fullWidth
-                        component={Link}
-                        href={route('login')}
-                    >
-                        Back to Login
-                    </Button>
-                </Stack>
+                    </PrimaryButton>
+                </div>
             </form>
-        </TwoStepsBox>
+        </GuestLayout>
     );
 }
