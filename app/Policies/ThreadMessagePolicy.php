@@ -20,7 +20,7 @@ class ThreadMessagePolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): Response
+    public function viewAny(User $user,): Response
     {
         return $user->id === $this->thread->user_id? Response::allow("Successfull retrived thread.") : Response::deny('You do not have permission to do this.');
     }
@@ -30,15 +30,15 @@ class ThreadMessagePolicy
      */
     public function view(User $user,ThreadMessage $threadMessage): Response
     {
-        return $user->id === $this->thread->user_id && $thread->id === $threadMessage->thread_id ? Response::allow() : Response::deny('You do not own this message.');
+        return $user->id === $this->thread->user_id && $this->thread->id === $threadMessage->thread_id ? Response::allow() : Response::deny('You do not own this message.');
     }
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user, ThreadMessage $threadMessage): Response
+    public function create(User $user): bool
     {
-        return $user->id === $this->thread->user_id && $thread->id === $threadMessage->thread_id ? Response::allow() : Response::deny('You do not own this thread.');
+        return $user->id === $this->thread->user_id  ;
     }
 
     /**

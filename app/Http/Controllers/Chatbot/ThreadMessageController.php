@@ -7,9 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ThreadMessageRequest;
 use App\Models\Thread;
 use App\Models\ThreadMessage;
+use Illuminate\Support\Facades\Http;
 
 class ThreadMessageController extends Controller
 {
+
 
     public function __construct()
     {
@@ -18,32 +20,30 @@ class ThreadMessageController extends Controller
 
     public function index(Thread $thread)
     {
-        $messages = $thread->messages()->get()->map(fn($message) => $this->mapModelToDto($message)->toArray());
-        return $this->sendResponse($messages, 'Messages retrieved successfully');
+        $messages = $thread->messages()->get()->map(fn($message) => $this->mapModelToDto($message));
+        return $this->sendResponse($messages, 'Lấy ra tất chả tin nhắn thành công','messages');
     }
 
     public function store(Thread $thread,ThreadMessageRequest $request)
     {
-        return $this->sendResponse($this->mapModelToDto(ThreadMessage::create($request->validated()+['thread_id'=>$thread->id])->toArray()), 'Message created successfully', 201);
+        $userMessage = $this->mapModelToDto($thread->sendMessage($request,'user'));
+        try{
+            $response = Http::post('http://localhost:5000/chat', [
+                'question' => $userMessage->message,
+                'history' => '',
+            ]);
+            if($response->successful()){
+                $botMessage = $this->mapModelToDto($thread->sendMessage($request,'bot',$response->json()['answer']));
+                return $this->sendResponse([$userMessage->toArray(),$botMessage->toArray()], 'Message created successfully',key:'messages', code:201);
+            }else{
+                return $this->sendResponse([],'Không thể kết nối với Bot', 500);
+            }
+
+        }catch (\Exception $e){
+            return $this->sendResponse([],'Xảy ra lõi với Bot '.$e, 500);
+        }
     }
 
-//    public function show(Thread $thread, ThreadMessage $threadMessage)
-//    {
-//        return $this->sendResponse($this->mapModelToDto($threadMessage)->toArray(), 'Message retrieved successfully');
-//    }
-
-//    public function update(ThreadMessageRequest $request, Thread $thread, ThreadMessage $threadMessage)
-//    {
-//        $threadMessage->update($request->validated());
-//        return $this->sendResponse($this->mapModelToDto($threadMessage)->toArray(), 'Message updated successfully');
-//    }
-//
-//    public function destroy(ThreadMessage $threadMessage)
-//    {
-//        $threadMessage->delete();
-//
-//        return $this->sendResponse([], 'Message deleted successfully');
-//    }
 
     private function mapModelToDto($message)
     {

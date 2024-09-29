@@ -7,17 +7,16 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('thread_messages', function (Blueprint $table) {
+        Schema::create('threads', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('thread_id');
-            $table->string('sender');
-            $table->dateTime('timestamp');
-            $table->string('message');
+            $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
+            $table->string('thread_name');
+            $table->dateTime('created_at');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('thread_messages');
+        Schema::dropIfExists('threads');
     }
 };

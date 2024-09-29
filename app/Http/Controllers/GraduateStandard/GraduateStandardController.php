@@ -12,7 +12,6 @@ use App\Models\Program;
 class GraduateStandardController extends Controller
 {
 
-
     public function __construct()
     {
         $this->authorizeResource([Faculty::class,GraduateStandard::class],'faculty,graduateStandard');

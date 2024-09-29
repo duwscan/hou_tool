@@ -17,16 +17,4 @@ class ThreadDto
         $this->user_id = $thread->user_id;
         $this->created_at = $thread->created_at;
     }
-
-    public function toArray(): array
-    {
-        return [
-            'thread'=>[
-                'id' => $this->id,
-                'thread_name' => $this->thread_name,
-                'user_id' => $this->user_id,
-                'created_at' => $this->created_at,
-            ]
-        ];
-    }
 }

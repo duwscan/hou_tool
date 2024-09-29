@@ -11,7 +11,6 @@ class TaggableController extends Controller
 {
     public function store(Post $post ,TaggableRequest $request)
     {
-
         return Taggable::create($request->validated());
     }
 

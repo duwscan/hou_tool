@@ -23,7 +23,7 @@ class ThreadController extends Controller
 
     public function store(ThreadRequest $request)
     {
-       $thread = Thread::create($request->validated()+['user_id'=>Auth::id(),'created_at'=>now()]);
+       $thread = Auth::user()->createThread($request);
         return $this->sendResponse(new ThreadDto($thread),"Tạo thread thành công","thread");
     }
 

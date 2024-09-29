@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Models\Faculty;
 use App\Models\GraduateStandard;
 use App\Models\Program;
+use App\Models\Thread;
+use App\Models\ThreadMessage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\RouteBinding;
@@ -38,6 +40,10 @@ class AppServiceProvider extends ServiceProvider
         \Illuminate\Support\Facades\Route::model('faculty',Faculty::class);
         \Illuminate\Support\Facades\Route::model('program',Program::class);
         \Illuminate\Support\Facades\Route::model('graduate_standard',GraduateStandard::class);
+        \Illuminate\Support\Facades\Route::model('thread',Thread::class);
+        \Illuminate\Support\Facades\Route::model('message',ThreadMessage::class);
+
+
 
     }
 }

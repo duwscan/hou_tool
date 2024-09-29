@@ -8,9 +8,9 @@ class ThreadRequest extends FormRequest
 {
     public function rules(): array
     {
+
         return [
             'thread_name' => ['required'],
-            'created_at' => ['date'],
         ];
     }
 

@@ -3,6 +3,8 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\DashBoard;
+use App\Filament\Resources\DashBoardResource\Widgets\GeneralStatsOverviewWidget;
+use App\Filament\Resources\DashBoardResource\Widgets\ThreadChartWidget;
 use Filament\FontProviders\GoogleFontProvider;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;

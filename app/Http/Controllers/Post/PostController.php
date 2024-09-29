@@ -21,8 +21,7 @@ class PostController extends Controller
 
     public function store(PostRequest $request)
     {
-
-        $post = Auth::user()->newPost(new NewPostDto($request->tittle, $request->body));
+        $post = Auth::user()->createPost($request);
         $post->attachTags($request->tags);
         return $this->sendResponse($this->modelToDto($post), "Tạo post thành công", key: 'post', code: \Symfony\Component\HttpFoundation\Response::HTTP_CREATED);
     }

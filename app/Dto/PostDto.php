@@ -11,6 +11,7 @@ class PostDto
     public string $tittle;
     public string $body;
     public string $slug;
+    public array $tags;
 
     public function __construct(Post $post)
     {
@@ -19,6 +20,7 @@ class PostDto
         $this->tittle = $post->tittle;
         $this->body = $post->body;
         $this->slug = $post->slug;
+        $this->tags = $post->tags()->get()->map(fn($tag) => new TagDto($tag))->toArray();
     }
 
     public function toArray(): array
@@ -26,10 +28,11 @@ class PostDto
         return [
             "post"=>[
                 'id' => $this->id,
-                'author_id' => $this->author_id,
+                'user_id' => $this->user_id,
                 'tittle' => $this->tittle,
                 'body' => $this->body,
                 'slug' => $this->slug,
+                'tags' => $this->tags
             ]
         ];
     }
