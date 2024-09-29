@@ -19,7 +19,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('faculties.graduate-standards', GraduateStandardController::class);
     Route::apiResource('clubs', ClubController::class);
     Route::apiResource('departments', DepartmentController::class);
-    Route::apiResource('threads', ThreadController::class);
+//    Route::apiResource('threads', ThreadController::class);
     Route::apiResource('threads.messages', \App\Http\Controllers\Chatbot\ThreadMessageController::class);
 });
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Chatbot\ThreadController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -13,6 +14,8 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+Route::resource('threads', ThreadController::class)->only(['index', 'update', 'destroy']);
+Route::resource('threads.chats', \App\Http\Controllers\Chatbot\ChatController::class)->only(['index', 'store']);
 Route::get('/chat', function () {
     return Inertia::render('Chat/Chat');
 });
@@ -27,4 +30,4 @@ Route::middleware('auth')->group(function () {
 });
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

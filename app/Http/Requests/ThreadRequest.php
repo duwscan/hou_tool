@@ -10,7 +10,6 @@ class ThreadRequest extends FormRequest
     {
         return [
             'thread_name' => ['required'],
-            'created_at' => ['date'],
         ];
     }
 

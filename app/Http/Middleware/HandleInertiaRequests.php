@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -34,39 +35,23 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            'flash' => [
-                'success' => $this->getFlashSuccessMessage(),
-                'error' => $this->getFlashErrorMessage(),
-            ]
+            'toast' => session()->get('toast'),
+            'listUserThreads' => $this->getListUserThreads(),
         ];
     }
 
-    private function getFlashSuccessMessage(): array
+    private function getListUserThreads(): array
     {
-        // get all the sessions
-        $sessions = session()->all();
-        return array_filter($sessions, function ($key) {
-            return str_starts_with($key, 'success_');
-        }, ARRAY_FILTER_USE_KEY);
-    }
-
-    private function getFlashErrorMessage(): array
-    {
-        // get all the sessions
-        $sessions = session()->all();
-        return array_filter($sessions, function ($key) {
-            return str_starts_with($key, 'error_');
-        }, ARRAY_FILTER_USE_KEY);
-    }
-
-    public static function shareFlashMessage(string $key, string $message, bool $error = false, bool $inlineUseSession = false): array
-    {
-        $message = [
-            $error ? 'error_' . $key : 'success_' . $key => $message
-        ];
-        if ($inlineUseSession) {
-            session()->flash($error ? 'error_' . $key : 'success_' . $key, $message);
+        $user = auth()->user();
+        if($user){
+            return $user->threads->map(function ($thread) {
+                return [
+                    'id' => $thread->id,
+                    'thread_name' => $thread->thread_name,
+                    'created_at' => $thread->created_at,
+                ];
+            })->toArray();
         }
-        return $message;
+        return [];
     }
 }

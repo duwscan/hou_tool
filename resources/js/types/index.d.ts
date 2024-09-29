@@ -13,6 +13,6 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
 
 export type ChatMessage = {
     id: string
-    content: string
+    message: string
     sender: 'user' | 'bot'
 }

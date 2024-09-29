@@ -1,20 +1,20 @@
 import {Link, usePage} from "@inertiajs/react";
-import {IoChatbubblesSharp} from "react-icons/io5";
-import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
 import {Button} from "@/components/ui/button";
-import {IoMdAdd} from "react-icons/io";
-import {BsClockHistory} from "react-icons/bs";
-import {CiFlag1} from "react-icons/ci";
 import {PanelLeft, Search, Settings} from "lucide-react";
 import {Sheet, SheetContent, SheetTrigger} from "@/components/ui/sheet";
 import {Input} from "@/components/ui/input";
-import React from "react";
+import React, {useEffect} from "react";
 import ToastBoundary from "@/boundary/ToastBoundary";
-import {FaHistory} from "react-icons/fa";
 import SideBar from "./SideBar";
+import {useRecoilState} from "recoil";
+import {Thread, threadStore} from "@/stores/ThreadStore";
 
 const PanelLayout = ({children}: { children: React.ReactNode }) => {
-    const {flash} = usePage().props;
+    const {listUserThreads} = usePage().props;
+    const [_, setThreads] = useRecoilState<Thread[]>(threadStore);
+    useEffect(() => {
+        setThreads(listUserThreads as Thread[]);
+    }, [listUserThreads]);
     return (
         <div className="flex min-h-screen w-full bg-muted/40">
             <aside className="inset-y-0 left-0 z-10 hidden w-fit flex-col border-r bg-background md:flex">
@@ -43,16 +43,15 @@ const PanelLayout = ({children}: { children: React.ReactNode }) => {
                         />
                     </div>
                     <Button>
-                        <Link href={route('chat')}>
+                        <Link href={route('threads.index')}>
                             Đoạn chat mới
                         </Link>
                     </Button>
                 </header>
-                <ToastBoundary flash={flash}>
-                    <main className="grid flex-1 items-start gap-4 p-4 md:px-6 md:py-0 md:gap-8">
-                        {children}
-                    </main>
-                </ToastBoundary>
+                <main className="grid flex-1 items-start gap-4 p-4 md:px-6 md:py-0 md:gap-8">
+                    {children}
+                    <ToastBoundary/>
+                </main>
             </div>
         </div>
     )

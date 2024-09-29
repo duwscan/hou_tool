@@ -1,44 +1,45 @@
-import {Toaster} from "@/components/ui/toaster";
-import {useToast} from "@/hooks/use-toast";
-import {Page} from "@inertiajs/core";
+import {router, usePage} from '@inertiajs/react'
+import {toast} from "sonner";
 import {useEffect} from "react";
-
+import {Toaster} from "@/components/ui/sonner";
 
 export type ToastBoundaryProps = {
-    flash?: unknown;
     children: React.ReactNode;
 }
-const ToastBoundary = ({children, flash}: ToastBoundaryProps) => {
-    const {toast} = useToast();
+type ToastType = 'success' | 'error' | 'info' | 'warning';
 
+function handleToast(type: ToastType, message: string) {
+    switch (type) {
+        case "success":
+            toast.success(message);
+            break;
+        case "error":
+            toast.error(message);
+            break;
+        case "info":
+            toast.info(message);
+            break;
+        case "warning":
+            toast.warning(message);
+            break;
+    }
+}
+
+const ToastBoundary = () => {
+
+    const props = usePage().props;
     useEffect(() => {
-        // @ts-ignore
-        if (flash && (flash.success || flash.error)) {
-            console.log(flash)
+        return router.on('success', function (event) {
             // @ts-ignore
-            if (flash.success && typeof flash.success === 'object') {
+            const toast = event.detail.page.props?.toast;
+            if (toast) {
                 // @ts-ignore
-                Object.entries(flash.success).forEach(([key, value]) => {
-                    toast({
-                        variant: "success",
-                        description: <p>{value as string}</p>,
-                    })
-                })
-            } else { // @ts-ignore
-                if (flash.error && typeof flash.error === 'object') {
-                    // @ts-ignore
-                    Object.entries(flash.success).forEach(([key, value]) => {
-                        toast({
-                            variant: "destructive",
-                            description: <p>{value as string}</p>,
-                        })
-                    })
-                }
+                handleToast(toast.type, toast.message)
             }
-        }
-    }, []);
+        })
+    }, [toast]);
+
     return (<>
-            {children}
             <Toaster/>
         </>
     );

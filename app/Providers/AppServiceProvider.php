@@ -16,7 +16,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(
+            \Illuminate\Contracts\Debug\ExceptionHandler::class,
+            \App\Exceptions\Handler::class
+        );
     }
 
     /**
@@ -29,11 +32,12 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(\App\Models\Program::class, \App\Policies\ProgramPolicy::class);
         Gate::policy(\App\Models\Thread::class, \App\Policies\ThreadPolicy::class);
         Gate::policy(\App\Models\ThreadMessage::class, \App\Policies\ThreadMessagePolicy::class);
-        App::setLocale('vi');
+
         Event::listen(Registered::class, function (Registered $event) {
             if ($event->user instanceof MustVerifyEmail && ! $event->user->hasVerifiedEmail()) {
                 $event->user->sendEmailVerificationNotification();
             }
         });
+
     }
 }
