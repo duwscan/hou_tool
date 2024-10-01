@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Chatbot;
 
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Models\Thread;
+use App\Services\ChatBotService;
 
 class ChatController
 {
+    public function __construct(private readonly ChatBotService $chatBotService)
+    {
+    }
     public function index(Thread $thread)
     {
         $thread->load('messages');
@@ -29,14 +33,7 @@ class ChatController
             'sender' => 'user',
             'message' => request('message'),
         ]);
-        // TODO get all the messages from the bot
-        $thread->messages()->create([
-            'sender' => 'bot',
-            'message' => fake()->sentence(),
-        ]);
-        // TODO: hanle UI when the bot down
-
-        // change the thread message
+        $thread->messages()->create($this->chatBotService->getAnswer(request('message')));
         if (!$thread->renamed) {
             $thread->update([
                 'thread_name' => request('message'),
