@@ -10,13 +10,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Thread extends Model
 {
     use HasFactory;
-
-    public $timestamps = false;
-
     protected $fillable = [
         'user_id',
         'thread_name',
         'created_at',
+        'renamed',
     ];
 
     public function user(): BelongsTo

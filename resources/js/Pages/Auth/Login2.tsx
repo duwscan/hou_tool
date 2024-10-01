@@ -1,92 +1,102 @@
-import {Link, useForm} from '@inertiajs/react'
-import {Grid, Box, Card, Stack, Typography} from '@mui/material';
-
-// components
-import PageContainer from '@/Components/container/PageContainer';
-import AuthLogin from './AuthLogin';
-import Main from "@/Layouts/Main";
-import {FormEventHandler} from "react";
-
-interface LoginPageProps {
-    status?: string;
-    canResetPassword: boolean;
-}
-
-export default function Login({status, canResetPassword}: LoginPageProps) {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        email: '',
-        password: '',
-        remember: false,
-    });
-
-    const submit: FormEventHandler = (e) => {
-        e.preventDefault();
-
-        post(route('login'), {
-            onFinish: () => reset('password'),
-        });
-    };
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {Input} from "@/components/ui/input";
+import {Link, router} from "@inertiajs/react";
+import {Button} from "@/components/ui/button";
+import {z} from "zod";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
+import {useForm as useReactHookForm} from "react-hook-form"
+import {handleServerValidationErrors} from "@/lib/utils";
+const LoginFormSchema = z.object({
+    email: z.string({
+        required_error: "Hãy nhập email của bạn",
+    }).email({
+        message: "Email không hợp lệ",
+    }),
+    password: z.string({
+        required_error: "Hãy nhập mật khẩu của bạn",
+    }),
+})
+export default function LoginForm() {
+    const form = useReactHookForm<z.infer<typeof LoginFormSchema>>(
+        {
+            resolver: zodResolver(LoginFormSchema),
+        }
+    )
+    const onSubmit = (data: z.infer<typeof LoginFormSchema>) => {
+        router.post(route('login'), data, {
+            onError: (errors) => {
+                handleServerValidationErrors(errors, form)
+            }
+        })
+    }
     return (
-        <Main>
-            <PageContainer title="Login Page" description="this is Sample page">
-                <Box
-                    sx={{
-                        position: 'relative',
-                        '&:before': {
-                            content: '""',
-                            background: 'radial-gradient(#d2f1df, #d3d7fa, #bad8f4)',
-                            backgroundSize: '400% 400%',
-                            animation: 'gradient 15s ease infinite',
-                            position: 'absolute',
-                            height: '100%',
-                            width: '100%',
-                            opacity: '0.3',
-                        },
-                    }}
-                >
-                    <Grid container spacing={0} justifyContent="center" sx={{height: '100vh'}}>
-                        <Grid
-                            item
-                            xs={12}
-                            sm={12}
-                            lg={5}
-                            xl={4}
-                            display="flex"
-                            justifyContent="center"
-                            alignItems="center"
-                        >
-                            <Card elevation={9} sx={{p: 4, zIndex: 1, width: '100%', maxWidth: '450px'}}>
-                                <Box display="flex" alignItems="center" justifyContent="center">
-                                    {/*<Logo />*/}
-                                    LOGO HERE
-                                </Box>
-                                <AuthLogin
-                                    canResetPassword={canResetPassword}
-                                    subtitle={
-                                        <Stack direction="row" spacing={1} justifyContent="center" mt={3}>
-                                            <Typography color="textSecondary" variant="h6" fontWeight="500">
-                                                New to Modernize?
-                                            </Typography>
-                                            <Typography
-                                                component={Link}
-                                                href="/auth/auth2/register"
-                                                fontWeight="500"
-                                                sx={{
-                                                    textDecoration: 'none',
-                                                    color: 'primary.main',
-                                                }}
-                                            >
-                                                Create an account
-                                            </Typography>
-                                        </Stack>
-                                    }
-                                />
-                            </Card>
-                        </Grid>
-                    </Grid>
-                </Box>
-            </PageContainer>
-
-        </Main>
-    );
-};
+        <div className="flex items-center justify-center h-screen">
+            <Card className="mx-auto max-w-sm">
+                <CardHeader>
+                    <CardTitle className="text-2xl">Đăng nhập</CardTitle>
+                    <CardDescription>
+                        Nhập email và mật khẩu của bạn để đăng nhập vào hệ thống
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)}>
+                            <div className="grid gap-4">
+                                <div className="grid gap-2">
+                                    <FormField
+                                        control={form.control}
+                                        name="email"
+                                        render={({field}) => (
+                                            <FormItem>
+                                                <FormLabel>Email</FormLabel>
+                                                <FormControl>
+                                                    <Input placeholder="Email" {...field} />
+                                                </FormControl>
+                                                <FormDescription>Địa chỉ email HOU của bạn</FormDescription>
+                                                <FormMessage/>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                <div className="grid gap-2">
+                                    <FormField
+                                        control={form.control}
+                                        name="password"
+                                        render={({field}) => (
+                                            <FormItem>
+                                                <FormLabel>Mật khẩu</FormLabel>
+                                                <FormControl>
+                                                    <Input placeholder="Password" {...field} type={"password"}/>
+                                                </FormControl>
+                                                <FormMessage/>
+                                                <FormDescription>
+                                                    <Link href="#" className="ml-auto inline-block text-sm underline">
+                                                       Quên mật khẩu ?
+                                                    </Link>
+                                                </FormDescription>
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <Button type="submit" className="w-full">
+                                        Đăng nhập
+                                    </Button>
+                                    <Button variant="outline" className="w-full">
+                                        Đăng nhập bằng Google
+                                    </Button>
+                                </div>
+                            </div>
+                        </form>
+                    </Form>
+                    <div className="mt-4 text-center text-sm">
+                       Chưa có tài khoản ?
+                        <Link href="#" className="underline">
+                            Đăng ký ngay
+                        </Link>
+                    </div>
+                </CardContent>
+            </Card>
+        </div>
+        // <CommonForm></CommonForm>
+    )
+}

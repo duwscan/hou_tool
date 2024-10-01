@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Requests\Auth\LoginRequest;
+use App\ultis\toast\Toaster;
+use App\ultis\toast\ToastType;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,8 +35,9 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
-        return redirect()->intended(route('dashboard', absolute: false));
+        Toaster::toast('Đăng nhập thành công', ToastType::SUCCESS);
+        return redirect()
+            ->intended(route('dashboard', absolute: false));
     }
 
     /**

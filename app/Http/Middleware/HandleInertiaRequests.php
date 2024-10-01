@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -34,6 +35,23 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'toast' => session()->get('toast'),
+            'listUserThreads' => $this->getListUserThreads(),
         ];
+    }
+
+    private function getListUserThreads(): array
+    {
+        $user = auth()->user();
+        if($user){
+            return $user->threads->map(function ($thread) {
+                return [
+                    'id' => $thread->id,
+                    'thread_name' => $thread->thread_name,
+                    'created_at' => $thread->created_at,
+                ];
+            })->toArray();
+        }
+        return [];
     }
 }

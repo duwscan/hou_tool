@@ -10,8 +10,6 @@ class ThreadMessage extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
-
     protected $fillable = [
         'thread_id',
         'sender',
