@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('threads', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->string('thread_name');
             $table->dateTime('created_at');
         });

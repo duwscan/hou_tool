@@ -9,9 +9,8 @@ class ThreadMessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'thread_id' => ['required', 'exists:threads'],
-            'sender' => ['required'],
-            'timestamp' => ['required', 'date'],
+            'sender' => ['in:bot,user'],
+            'timestamp' => ['date'],
             'message' => ['required'],
         ];
     }

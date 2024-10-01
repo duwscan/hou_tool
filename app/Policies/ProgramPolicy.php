@@ -10,10 +10,7 @@ use Illuminate\Http\Request;
 
 class ProgramPolicy
 {
-
-
     private Faculty $faculty;
-
     public function __construct(Request $request)
     {
         $this->faculty = $request->faculty;
@@ -30,7 +27,9 @@ class ProgramPolicy
 
     public function view(User $user, Program $program)
     {
-        return $program->falcuty_id == $this ->faculty->id ? Response::allow('Succesfully') : Response::denyAsNotFound('Not found');
+        return $this->faculty->id === $program->faculty_id
+            ? Response::allow('Thành công')
+            : Response::deny('Không thể truy cập');
     }
 
     /**
@@ -43,12 +42,16 @@ class ProgramPolicy
 
     public function update(User $user, Program $program): Response
     {
-        return $program->falcuty_id == $this ->faculty->id ? Response::allow('Succesfully') : Response::deny('Not found');
+        return $this->faculty->id === $program->faculty_id
+            ? Response::allow('Thành công')
+            : Response::deny('Không thể truy cập');
     }
 
     public function delete(User $user, Program $program): Response
     {
-        return $program->falcuty_id == $this ->faculty->id ? Response::allow('Succesfully') : Response::deny('Not found');
+        return $this->faculty->id === $program->faculty_id
+            ? Response::allow('Thành công')
+            : Response::deny('Không thể truy cập');
     }
 
     public function restore(User $user, Program $program): bool
@@ -56,8 +59,8 @@ class ProgramPolicy
         return true;
     }
 
-    public function forceDelete(User $user, Program $program): Response
+    public function forceDelete(User $user, Program $program): bool
     {
-        return $program->falcuty_id == $this ->faculty->id ? Response::allow('Succesfully') : Response::deny('Not found');
+        return true;
     }
 }

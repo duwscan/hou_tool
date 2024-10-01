@@ -20,6 +20,13 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('departments', DepartmentController::class);
 //    Route::apiResource('threads', ThreadController::class);
     Route::apiResource('threads.messages', \App\Http\Controllers\Chatbot\ThreadMessageController::class);
+    Route::prefix('forum')->group(function (){
+        Route::apiResource('tags', \App\Http\Controllers\Tag\TagController::class);
+        Route::apiResource('posts', \App\Http\Controllers\Post\PostController::class);
+        Route::apiResource('posts.replies', \App\Http\Controllers\Reply\ReplyController::class);
+    });
 });
+
+
 
 

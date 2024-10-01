@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('programs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('faculty_id')->constrained('faculties');
+            $table->foreignId('faculty_id')->constrained('faculties')->cascadeOnDelete();
             $table->string('name');
             $table->string('file_path');
         });

@@ -13,7 +13,7 @@ class ProgramController extends Controller
 
     public function __construct()
     {
-        $this->authorizeResource(Program::class);
+        $this->authorizeResource([Faculty::class,Program::class],'faculty,program');
     }
 
     public function index(Faculty $faculty)

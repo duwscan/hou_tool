@@ -7,14 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\GraduateStandardRequest;
 use App\Models\Faculty;
 use App\Models\GraduateStandard;
+use App\Models\Program;
 
 class GraduateStandardController extends Controller
 {
 
-
     public function __construct()
     {
-        $this->authorizeResource(GraduateStandard::class);
+        $this->authorizeResource([Faculty::class,GraduateStandard::class],'faculty,graduateStandard');
     }
 
     public function index(Faculty $faculty)
