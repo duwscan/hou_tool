@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AuthTest\AuthController;
-use App\Http\Controllers\Chatbot\ThreadController;
 use App\Http\Controllers\Club\ClubController;
 use App\Http\Controllers\Department\DepartmentController;
 use App\Http\Controllers\Faculty\FacultyController;
