@@ -30,7 +30,7 @@ class ThreadMessageController extends Controller
         try{
             $response = Http::post('http://localhost:5000/chat', [
                 'question' => $userMessage->message,
-                'history' => '',
+                'history' => '"',
             ]);
             if($response->successful()){
                 $botMessage = $this->mapModelToDto($thread->sendMessage($request,'bot',$response->json()['answer']));
