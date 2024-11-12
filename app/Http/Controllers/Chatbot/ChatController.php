@@ -28,17 +28,7 @@ class ChatController
 
     public function store(Thread $thread)
     {
-        sleep(5);
-        $thread->messages()->create([
-            'sender' => 'user',
-            'message' => request('message'),
-        ]);
-        $thread->messages()->create($this->chatBotService->getAnswer(request('message')));
-        if (!$thread->renamed) {
-            $thread->update([
-                'thread_name' => request('message'),
-            ]);
-        }
+        $this->chatBotService->getAnswer(request('message'), $thread);
         return to_route('threads.chats.index', $thread->id);
     }
 }

@@ -81,9 +81,6 @@ export default function LoginForm() {
                                     <Button type="submit" className="w-full">
                                         Đăng nhập
                                     </Button>
-                                    <Button variant="outline" className="w-full">
-                                        Đăng nhập bằng Google
-                                    </Button>
                                 </div>
                             </div>
                         </form>

@@ -10,7 +10,7 @@ export default function Composer() {
     const [isExpanded, setIsExpanded] = useState(false)
     const [inputValue, setInputValue] = useState('')
     const textareaRef = useRef<HTMLTextAreaElement>(null)
-    const {addMessage} = useChat()
+    const {addMessage, isSending} = useChat()
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.ctrlKey && event.key === 'Enter') {

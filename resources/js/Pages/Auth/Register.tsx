@@ -127,16 +127,13 @@ export default function Register() {
                                     <Button type="submit" className="w-full">
                                             Đăng kí
                                     </Button>
-                                    <Button variant="outline" className="w-full">
-                                        Đăng nhập bằng Google
-                                    </Button>
                                 </div>
                             </div>
                         </form>
                     </Form>
                     <div className="mt-4 text-center text-sm">
                         Đã có tài khoản ?
-                        <Link href={route('register')} className="underline">
+                        <Link href={route('login')} className="underline">
                             Đăng nhập
                         </Link>
                     </div>

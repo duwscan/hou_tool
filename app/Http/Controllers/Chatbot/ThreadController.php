@@ -6,24 +6,45 @@ use App\Dto\ThreadDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ThreadRequest;
 use App\Models\Thread;
+use App\Services\ChatBotService;
 use App\ultis\toast\Toaster;
 use App\ultis\toast\ToastType;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ThreadController extends Controller
 {
-    public function __construct()
+    public function __construct(private readonly ChatBotService $chatBotService)
     {
 //        $this->authorizeResource(Thread::class);
     }
 
     public function index()
     {
+        if(!auth()->user()){
+            return Inertia::render('Chat', [
+                'empty_thread' => true,
+            ]);
+        }
         $threads = Thread::create([
             'user_id' => auth()->id(),
             'thread_name' => 'Đoạn chat mới',
         ]);
         return to_route('threads.chats.index', $threads->id);
+    }
+
+    public function store(Request $request) {
+        $request->validate([
+            'message' => 'required|string',
+        ]);
+
+        $thread = Thread::create([
+            'user_id' => auth()->id(),
+            'thread_name' => 'Đoạn chat mới',
+        ]);
+
+        $this->chatBotService->getAnswer(request('message'), $thread);
+        return to_route('threads.chats.index', $thread->id);
     }
 
     public function show(Thread $thread)

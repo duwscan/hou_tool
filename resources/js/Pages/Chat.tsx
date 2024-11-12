@@ -11,12 +11,17 @@ import {useChat} from "@/hooks/useChat";
 import BotThinking from "@/components/Chat/BotThinking";
 
 const Chat = () => {
-    const {chats,setChats,isSending,addMessage} = useChat();
+    const {chats, setChats, isSending, addMessage} = useChat();
     const {selectThread} = useThread();
     const pageProps = usePage().props;
     useEffect(() => {
-        setChats(pageProps.messages as ChatType[])
-        if(pageProps.thread_id){
+        if (pageProps.empty_thread && chats.length == 1 && !isSending) {
+            addMessage(chats[0].message, 'new_thread')
+        }
+        if (pageProps.messages) {
+            setChats(pageProps.messages as ChatType[])
+        }
+        if (pageProps.thread_id) {
             selectThread(pageProps.thread_id as number)
         }
     }, [pageProps]);

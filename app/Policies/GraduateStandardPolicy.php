@@ -11,14 +11,6 @@ use Illuminate\Http\Request;
 class GraduateStandardPolicy
 {
 
-
-    private Faculty $faculty;
-
-    public function __construct(Request $request)
-    {
-        $this->faculty = $request->faculty;
-    }
-
     public function viewAny(User $user): bool
     {
         return true;
@@ -26,9 +18,7 @@ class GraduateStandardPolicy
 
     public function view(User $user,Faculty $faculty, GraduateStandard $graduateStandards): Response
     {
-        return $this->faculty->id === $graduateStandards->faculty_id
-            ? Response::allow('Thành công')
-            : Response::deny('Không thể truy cập');
+        return true;
     }
 
     public function create(User $user): bool
@@ -36,26 +26,19 @@ class GraduateStandardPolicy
         return true;
     }
 
-    public function update(User $user,Faculty $faculty, GraduateStandard $graduateStandards): Response
+    public function update(User $user,Faculty $faculty, GraduateStandard $graduateStandards)
     {
-        return $this->faculty->id === $graduateStandards->faculty_id
-            ? Response::allow('Thành công')
-            : Response::deny('Không thể truy cập');
-
+        return true;
     }
 
-    public function delete(User $user,Faculty $faculty, GraduateStandard $graduateStandards): Response
+    public function delete(User $user,Faculty $faculty, GraduateStandard $graduateStandards)
     {
-        return $this->faculty->id === $graduateStandards->faculty_id
-            ? Response::allow('Thành công')
-            : Response::deny('Không thể truy cập');
+        return true;
     }
 
-    public function restore(User $user, GraduateStandard $graduateStandards): Response
+    public function restore(User $user, GraduateStandard $graduateStandards)
     {
-        return $this->faculty->id === $graduateStandards->faculty_id
-            ? Response::allow('Thành công')
-            : Response::deny('Không thể truy cập');
+        return true;
     }
 
     public function forceDelete(User $user, GraduateStandard $graduateStandards): bool

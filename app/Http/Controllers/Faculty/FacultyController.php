@@ -12,9 +12,10 @@ class FacultyController extends Controller
 
     public function index()
     {
-        $faculties = Faculty::with(['programs', 'graduateStandards'])->get();
-        $facultyDtos = $faculties->map(fn ($faculty) => $this->modelToDto($faculty)->toArray());
-        return $this->sendResponse($facultyDtos, 'Faculties retrieved successfully.',);
+        $faculties = Faculty::all();
+        return inertia('Faculty/List', [
+            'faculties' => $faculties
+        ]);
     }
 
     public function store(FacultyRequest $request)
@@ -25,7 +26,11 @@ class FacultyController extends Controller
 
     public function show(Faculty $faculty)
     {
-        return $this->sendResponse($this->modelToDto($faculty)->toArray(), 'School retrieved successfully.','faculty');
+        $faculty->load('graduateStandards');
+        $faculty->load('programs');
+        return inertia('Faculty/Detail', [
+            'faculty' => $faculty
+        ]);
     }
 
     public function update(FacultyRequest $request, Faculty $faculty)

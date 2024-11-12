@@ -17,6 +17,7 @@ class GraduateStandardResource extends Resource
 {
 
     protected static ?string $model = GraduateStandard::class;
+    protected static ?string $navigationGroup='Tiện ích';
     protected static ?string $pluralModelLabel = 'Chuẩn đầu ra';
     protected static ?string $navigationIcon = 'heroicon-o-book-open';
 

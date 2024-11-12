@@ -10,12 +10,6 @@ use Illuminate\Http\Request;
 
 class ProgramPolicy
 {
-    private Faculty $faculty;
-    public function __construct(Request $request)
-    {
-        $this->faculty = $request->faculty;
-    }
-
 
     /**
      * Determine whether the user can view any models.
@@ -27,9 +21,7 @@ class ProgramPolicy
 
     public function view(User $user, Program $program)
     {
-        return $this->faculty->id === $program->faculty_id
-            ? Response::allow('Thành công')
-            : Response::deny('Không thể truy cập');
+       return true;
     }
 
     /**
@@ -40,18 +32,14 @@ class ProgramPolicy
         return true;
     }
 
-    public function update(User $user, Program $program): Response
+    public function update(User $user, Program $program)
     {
-        return $this->faculty->id === $program->faculty_id
-            ? Response::allow('Thành công')
-            : Response::deny('Không thể truy cập');
+        return true;
     }
 
-    public function delete(User $user, Program $program): Response
+    public function delete(User $user, Program $program)
     {
-        return $this->faculty->id === $program->faculty_id
-            ? Response::allow('Thành công')
-            : Response::deny('Không thể truy cập');
+        return true;
     }
 
     public function restore(User $user, Program $program): bool
