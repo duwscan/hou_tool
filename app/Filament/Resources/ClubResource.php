@@ -33,6 +33,10 @@ class ClubResource extends Resource
                     ->label('Tên')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\FileUpload::make('imageUrl')
+                    ->label("Ảnh bìa")
+                    ->directory('/club')
+                    ->required(),
                 Forms\Components\RichEditor::make('detail')
                     ->label('Chi Tiết')
                     ->required()
@@ -47,6 +51,7 @@ class ClubResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->label('Tên')
                     ->searchable(),
+                Tables\Columns\ImageColumn::make('imageUrl')->label('Ảnh bìa'),
             ])
             ->filters([
                 //
