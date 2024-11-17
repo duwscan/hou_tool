@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Chatbot\ThreadController;
+use App\Http\Controllers\Department\DepartmentController;
 use App\Http\Controllers\Faculty\FacultyController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -26,4 +27,5 @@ Route::middleware('auth')->group(function () {
 });
 Route::get('/faculty', [FacultyController::class, 'index'])->name('faculty.index');
 Route::get('/faculty/{faculty}', [FacultyController::class, 'show'])->name('faculty.show');
+Route::get('/departments', [DepartmentController::class, 'index'])->name('department.index');
 require __DIR__ . '/auth.php';

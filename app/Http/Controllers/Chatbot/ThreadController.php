@@ -21,7 +21,7 @@ class ThreadController extends Controller
 
     public function index()
     {
-        if(!auth()->user()){
+        if(!auth()->user() || \request()->has('empty_thread')) {
             return Inertia::render('Chat', [
                 'empty_thread' => true,
             ]);
@@ -63,7 +63,11 @@ class ThreadController extends Controller
     public function destroy(Thread $thread)
     {
         $thread->delete();
-        return back()
-            ->withToast(new Toaster('Xóa thread thành công', ToastType::SUCCESS));
+        if (route('threads.chats.index',$thread->id) === back()->getTargetUrl()) {
+            return redirect()->route('dashboard')
+                ->withToast(new Toaster('Xóa thread thành công', ToastType::SUCCESS));
+        }
+
+        return back()->withToast(new Toaster('Xóa thread thành công', ToastType::SUCCESS));
     }
 }

@@ -13,7 +13,7 @@ Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
 });
 Route::middleware(['auth:api'])->group(function () {
-    Route::apiResource('faculties', FacultyController::class);
+//    Route::apiResource('faculties', FacultyController::class);
     Route::apiResource('faculties.programs', ProgramController::class);
     Route::apiResource('faculties.graduate-standards', GraduateStandardController::class);
     Route::apiResource('clubs', ClubController::class);

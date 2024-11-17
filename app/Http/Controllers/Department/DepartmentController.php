@@ -11,8 +11,8 @@ class DepartmentController extends Controller
 {
     public function index()
     {
-        $departments = Department::all()->map(fn($department) => $this->mapModelToDto($department)->toArray());
-        return $this->sendResponse($departments, 'Departments retrieved successfully');
+        $departments = Department::all();
+        return inertia()->render('department/List',compact('departments'));
     }
 
     public function store(DepartmentRequest $request)

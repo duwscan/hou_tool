@@ -9,10 +9,10 @@ return new class extends Migration {
     {
         Schema::create('thread_messages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('thread_id')->constrained('threads');
+            $table->foreignId('thread_id')->constrained('threads')->cascadeOnDelete();
             $table->string('sender');
             $table->dateTime('timestamp');
-            $table->string('message');
+            $table->text('message');
         });
     }
 

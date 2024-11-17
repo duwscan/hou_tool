@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Thread;
 use App\Models\ThreadMessage;
 use Http;
+use Illuminate\Support\Str;
 
 class ChatBotService
 {
@@ -30,7 +31,7 @@ class ChatBotService
             throw new \Exception('Bot error');
         }, [
             'sender' => 'bot',
-            'message' => 'Hiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sau',
+            'message' => 'Hiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sau,Hiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sau,Hiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sau',
         ]);
     }
 
@@ -49,7 +50,7 @@ class ChatBotService
         $thread->messages()->save($botMessage);
         if (!$thread->renamed) {
             $thread->update([
-                'thread_name' => request('message'),
+                'thread_name' => Str::limit(request('message'), 20, '...'),
             ]);
         }
         return $botMessage;

@@ -2,7 +2,13 @@ import React, {useState} from 'react'
 import {Button} from "@/components/ui/button"
 import {ScrollArea} from "@/components/ui/scroll-area"
 import {MessageSquare, Compass, LayoutGrid, Edit2, Star, MoreHorizontal, Pencil, Trash2, Share} from 'lucide-react'
-import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel, DropdownMenuSeparator,
+    DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
 import {Input} from "@/components/ui/input";
 import {groupThreads, selectedThread, ThreadGroup} from "@/stores/ThreadStore";
 import {useRecoilState, useRecoilValue} from "recoil";
@@ -37,10 +43,7 @@ export default function Sidebar() {
                 ))}
             </ScrollArea>
             <div className="p-4 border-t border-gray-200">
-                <Button variant="ghost" className="w-full justify-start text-blue-600 hover:bg-blue-50">
-                    <Star className="mr-2 h-4 w-4"/>
-                    Tiện ích
-                </Button>
+                <UtilityButton/>
             </div>
         </div>
     )
@@ -97,12 +100,30 @@ const ThreadItem: React.FC<{
                         <Trash2 className="mr-2 h-4 w-4"/>
                         <span>Xóa</span>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <Share className="mr-2 h-4 w-4"/>
-                        <span>Chia sẻ</span>
-                    </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
         </div>
     )
+}
+const UtilityButton = () => {
+    return <>
+        <DropdownMenu>
+            <DropdownMenuTrigger className={'w-full'}>
+                <Button variant="ghost" className="w-full justify-start text-blue-600 hover:bg-blue-50">
+                <Star className="mr-2 h-4 w-4"/>
+                Tiện ích
+            </Button></DropdownMenuTrigger>
+            <DropdownMenuContent className={'w-72'}>
+                <DropdownMenuLabel>Tiện ích</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                    <Link className={'w-full'} href={route('department.index')}>Phòng ban</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>Câu lạc bộ</DropdownMenuItem>
+                <DropdownMenuItem>
+                    <Link className={'w-full'} href={route('faculty.index')}>Khoa</Link>
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
+    </>
 }

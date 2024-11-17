@@ -12,6 +12,7 @@ export function useChat() {
     function addMessage(message: string, status : string = 'sending' ) {
         setIsSending(true);
         if (!selectedThreadId) {
+            console.log('empty thread');
             setChats([{
                 id: chats.length + 1,
                 message,
@@ -26,7 +27,7 @@ export function useChat() {
                 })
                 return;
             }
-            router.get(route('threads.index'));
+            router.get(route('threads.index'), {empty_thread: true});
             return;
         }
         setChats([...chats, {

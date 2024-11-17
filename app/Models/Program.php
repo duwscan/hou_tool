@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 
 class Program extends Model
 {
@@ -15,11 +16,19 @@ class Program extends Model
         'name',
         'file_path',
     ];
+    protected $appends = [
+        'full_url'
+    ];
 
     public $timestamps = false;
 
     public function faculty(): BelongsTo
     {
         return $this->belongsTo(Faculty::class);
+    }
+
+    protected function getFullUrlAttribute()
+    {
+        return $this->file_path ? Storage::url($this->file_path) : null;
     }
 }

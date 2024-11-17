@@ -2,12 +2,13 @@ import PanelLayout from "@/components/Layout/Layout";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {BookOpen, GraduationCap, Info} from "lucide-react";
 
-const Detail = () => {
+const Detail = ({faculty}: any) => {
+    console.log(faculty);
     return <>
         <PanelLayout>
             <div className="container mx-auto py-8 px-4">
                 <header className="text-center mb-12">
-                    <h1 className="text-4xl font-bold mb-4">CLB Bay lắc</h1>
+                    <h1 className="text-4xl font-bold mb-4">{faculty?.name}</h1>
                     <Card className="mt-8">
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
@@ -17,9 +18,7 @@ const Detail = () => {
                         </CardHeader>
                         <CardContent>
                             <p className="text-muted-foreground">
-                                Để biết thêm thông tin chi tiết về chương trình học, các hoạt động ngoại khóa và cơ hội nghề
-                                nghiệp, vui lòng liên hệ với văn phòng CLB Bay lắc hoặc truy cập trang web chính thức của
-                                chúng tôi.
+                                {faculty?.description}
                             </p>
                         </CardContent>
                     </Card>
@@ -35,11 +34,16 @@ const Detail = () => {
                         </CardHeader>
                         <CardContent>
                             <ul className="list-disc list-inside space-y-2">
-                                <li>Áp dụng kiến thức cơ bản về công nghệ thông tin</li>
-                                <li>Phát triển kỹ năng lập trình và giải quyết vấn đề</li>
-                                <li>Thiết kế và triển khai các dự án phần mềm</li>
-                                <li>Làm việc hiệu quả trong nhóm và giao tiếp chuyên nghiệp</li>
-                                <li>Áp dụng các nguyên tắc đạo đức trong công nghệ thông tin</li>
+                                {faculty?.graduate_standards.map((graduate_standard: any, index: number) => {
+                                    return <li key={index}>
+                                        {graduate_standard?.full_url ? (
+                                            <a target="_blank" rel="noopener" className={'underline'}
+                                               href={graduate_standard?.full_url}>
+                                                {graduate_standard?.name}
+                                            </a>) : <span>{graduate_standard?.name}</span>
+                                        }
+                                    </li>
+                                })}
                             </ul>
                         </CardContent>
                     </Card>
@@ -53,14 +57,16 @@ const Detail = () => {
                         </CardHeader>
                         <CardContent>
                             <ul className="list-disc list-inside space-y-2">
-                                <li>Nhập môn lập trình</li>
-                                <li>Cơ sở dữ liệu</li>
-                                <li>Mạng máy tính cơ bản</li>
-                                <li>Lập trình hướng đối tượng</li>
-                                <li>Phát triển ứng dụng web</li>
-                                <li>An toàn thông tin</li>
-                                <li>Trí tuệ nhân tạo và học máy</li>
-                                <li>Quản lý dự án phần mềm</li>
+                                {faculty?.programs.map((program: any, index: number) => {
+                                    return <li key={index}>
+                                        {program?.full_url ? (
+                                            <a target="_blank" rel="noopener" className={'underline'}
+                                               href={program?.full_url}>
+                                                {program?.name}
+                                            </a>) : <span>{program?.name}</span>
+                                        }
+                                    </li>
+                                })}
                             </ul>
                         </CardContent>
                     </Card>

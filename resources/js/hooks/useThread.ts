@@ -4,7 +4,7 @@ import {router} from "@inertiajs/react";
 
 export const useThread = () => {
     const [threads, setThreads] = useRecoilState(threadStore);
-    const [_, setSelectedThreadId] = useRecoilState(selectedThread);
+    const [selectedThreadId, setSelectedThreadId] = useRecoilState(selectedThread);
 
     function selectThread(id: number) {
         setSelectedThreadId(id);
@@ -15,6 +15,9 @@ export const useThread = () => {
     }
 
     function deleteThread(id: number) {
+        if(selectedThreadId === id) {
+            setSelectedThreadId(null);
+        }
         router.delete(route('threads.destroy', id));
     }
 

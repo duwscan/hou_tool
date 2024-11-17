@@ -87,7 +87,7 @@ export default function LoginForm() {
                     </Form>
                     <div className="mt-4 text-center text-sm">
                        Chưa có tài khoản ?
-                        <Link href="#" className="underline">
+                        <Link href={route('register')} className="underline">
                             Đăng ký ngay
                         </Link>
                     </div>
