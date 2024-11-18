@@ -64,7 +64,7 @@ class ChatBotService
         ]);
         $botMessage = new ThreadMessage();
         $botMessage->sender = 'bot';
-        $botMessage->message = $this->getBotAnswer(request('message'))['message'];
+        $botMessage->message = $this->getBotAnswer($thread,request('message'))['message'];
         $thread->messages()->save($botMessage);
         if (!$thread->renamed) {
             $thread->update([
