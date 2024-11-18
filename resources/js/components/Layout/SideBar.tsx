@@ -28,8 +28,10 @@ export default function Sidebar() {
                     </a>
                 </Button>
                 <Button variant="ghost" className="w-full justify-start text-gray-800 hover:bg-gray-100">
-                    <Compass className="mr-2 h-4 w-4"/>
-                    Trang chủ HOU
+                    <a href="https://hou.edu.vn/" target="_blank" rel="noopener noreferrer" className="flex items-center w-full">
+                        <Compass className="mr-2 h-4 w-4"/>
+                        Trang chủ HOU
+                    </a>
                 </Button>
             </div>
             <ScrollArea className="flex-grow px-4 py-2 w-full">
@@ -119,7 +121,7 @@ const UtilityButton = () => {
                 <DropdownMenuItem>
                     <Link className={'w-full'} href={route('department.index')}>Phòng ban</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>Câu lạc bộ</DropdownMenuItem>
+                {/* <DropdownMenuItem>Câu lạc bộ</DropdownMenuItem> */}
                 <DropdownMenuItem>
                     <Link className={'w-full'} href={route('faculty.index')}>Khoa</Link>
                 </DropdownMenuItem>

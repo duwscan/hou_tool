@@ -3,6 +3,7 @@ import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {Chat} from "@/stores/ChatStore";
 import {Loader2} from "lucide-react";
 import BotThinking from "@/components/Chat/BotThinking";
+import ReactMarkdown from 'react-markdown';
 
 const ChatMessage: React.FC<{ message: Chat }> = ({message}) => {
     const isUser = message.sender === 'user'
@@ -21,9 +22,9 @@ const ChatMessage: React.FC<{ message: Chat }> = ({message}) => {
                             isUser
                                 ? 'bg-primary text-primary-foreground ml-12 sm:ml-24'
                                 : 'bg-secondary text-secondary-foreground mr-12 sm:mr-24'
-                        } ${isUser ? 'rounded-br-none' : 'rounded-bl-none'} break-words`}
+                        } ${isUser ? 'rounded-br-none' : 'rounded-bl-none'} break-words prose prose-sm max-w-none dark:prose-invert`}
                     >
-                        {message.message}
+                        <ReactMarkdown>{message.message}</ReactMarkdown>
                     </div>
                 </div>
             </div>
@@ -31,7 +32,6 @@ const ChatMessage: React.FC<{ message: Chat }> = ({message}) => {
                 {message.status === 'sending' && (<BotThinking/>)}
             </div>
         </>
-
     )
 }
 

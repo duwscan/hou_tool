@@ -18,7 +18,8 @@ class PostResource extends Resource
     protected static ?string $model = Post::class;
     protected static ?string $pluralLabel = 'Diễn đàn';
 
-    protected static ?string $navigationGroup="Tiện ích";
+    // protected static ?string $navigationGroup="Tiện ích";
+    protected static bool $shouldRegisterNavigation = false;
     protected static ?int $navigationSort=4;
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
 

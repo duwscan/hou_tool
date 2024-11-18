@@ -7,7 +7,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import {RecoilRoot} from "recoil";
 import {Toaster} from "@/components/ui/sonner";
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'Chatbot HOU';
 
 createInertiaApp({
     progress : false,

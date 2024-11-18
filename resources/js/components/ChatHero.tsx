@@ -9,18 +9,33 @@ import {MdArrowOutward} from "react-icons/md";
 import {useChat} from "@/hooks/useChat";
 const Suggestions = [
     {
-        id : 1,
-        text : "Trường đại học Mở có các cơ sở nào"
+        id: 1,
+        text: "Trường đại học Mở có ngành nào",
+        variants: [
+            "Trường có những ngành đào tạo nào",
+            "Cho em hỏi về các ngành học ở trường"
+        ]
     },
     {
-        id : 2,
-        text: "Trường đại học Mở có ngành nào"
+        id: 2,
+        text: "Để đạt học bổng xuất sắc cần điều kiện gì",
+        variants: [
+            "Điều kiện để được học bổng xuất sắc là gì",
+            "Làm sao để đạt học bổng xuất sắc ạ?"
+        ]
     },
     {
         id: 3,
-        text: "Trường đại học Mở có chương trình nào"
+        text: "Học phí năm 2024 của khoa CNTT là bao nhiêu?",
+        variants: [
+            "Cho em hỏi học phí khoa CNTT năm 2024",
+            "Học phí ngành CNTT năm nay là bao nhiêu ạ?"
+        ]
     }
-]
+].map(suggestion => ({
+    ...suggestion,
+    text: [suggestion.text, ...suggestion.variants][Math.floor(Math.random() * 3)]
+}))
 export default function ChatHero() {
     const {addMessage, isSending} = useChat()
     const handleNewThreadWithSuggestion = (suggestion: string) => {
