@@ -15,12 +15,30 @@ class ChatBotService
         return env('CHAT_BOT_ENDPOINT');
     }
 
-    public function getBotAnswer(string $message): array
+    public function getBotAnswer(Thread $thread, string $question): array
     {
-        return rescue(function () use ($message) {
+        $messages = $thread->messages()->get()->toArray();
+        $messagePairs = [];
+        $userMessage = null;
+
+        foreach ($messages as $message) {
+            if ($message->sender === 'user') {
+                // Lưu câu hỏi của user
+                $userMessage = $message->message;
+            } elseif ($message->sender === 'bot' && $userMessage !== null) {
+                // Nếu có câu hỏi của user, kết hợp với câu trả lời của bot
+                $messagePairs[] = [
+                    'user' => $userMessage,
+                    'bot' => $message->message
+                ];
+                // Reset câu hỏi để sẵn sàng cho cặp tiếp theo
+                $userMessage = null;
+            }
+        }
+        return rescue(function () use ($messagePairs, $question) {
             $res = Http::post($this->botEndpoint(), [
-                'message' => $message,
-                'history' => '',
+                'question' => $question,
+                'history' => $messagePairs,
             ]);
             if ($res->successful()) {
                 return [
