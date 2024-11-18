@@ -17,7 +17,7 @@ class ChatBotService
 
     public function getBotAnswer(Thread $thread, string $question): array
     {
-        $messages = $thread->messages()->get()->toArray();
+        $messages = $thread->messages()->get();
         $messagePairs = [];
         $userMessage = null;
 
@@ -31,33 +31,36 @@ class ChatBotService
                     'user' => $userMessage,
                     'bot' => $message->message
                 ];
+               
                 // Reset câu hỏi để sẵn sàng cho cặp tiếp theo
                 $userMessage = null;
             }
         }
-        return rescue(function () use ($messagePairs, $question) {
+        try {
             $res = Http::post($this->botEndpoint(), [
                 'question' => $question,
                 'history' => $messagePairs,
             ]);
+    
             if ($res->successful()) {
                 return [
                     'sender' => 'bot',
                     'message' => $res->json()['answer'],
                 ];
             }
-            throw new \Exception('Bot error');
-        }, [
-            'sender' => 'bot',
-            'message' => 'Hiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sau,Hiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sau,Hiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sauHiện tại bot chưa thể trả lời câu hỏi của bạn. Vui lòng thử lại sau',
-        ]);
+            throw new Exception();
+        }catch (Exception $e) {
+            return [
+                'sender' => 'bot',
+                'message' => 'Hiện tại bot chưa thể trả lời câu hỏi của bạn. '
+            ];
+        
+        }
     }
 
     public function getAnswer(string $message, Thread $thread): ThreadMessage
     {
-        if(app()->environment('local')) {
-//            sleep(5);
-        }
+    
         $thread->messages()->create([
             'sender' => 'user',
             'message' => request('message'),
